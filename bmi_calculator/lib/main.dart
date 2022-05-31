@@ -6,7 +6,6 @@ import 'package:bmi_calculator/constants.dart';
 
 void main() => runApp(BMICalculator());
 
-//TODO:
 
 class BMICalculator extends StatelessWidget {
   @override

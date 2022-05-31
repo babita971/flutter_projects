@@ -16,6 +16,7 @@ class ResultPage extends StatelessWidget {
   ResultPage({required this.calcObject});
   @override
   Widget build(BuildContext context) {
+    print('askahslaslas');
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
