@@ -1,4 +1,5 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:ecommerce_app/constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'modules/dashboard/binding/dashboard_binding.dart';
@@ -20,9 +21,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          primaryColor: const Color(0xFFFAFAFA),
+          primaryColor: kPrimaryColor,
           colorScheme: ColorScheme.light().copyWith(
-            primary: Color(0xFFFAFAFA),
+            primary: kPrimaryColor,
           ),
         ),
         initialRoute: '/splashScreen',

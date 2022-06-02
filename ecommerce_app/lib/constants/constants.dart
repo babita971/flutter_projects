@@ -5,3 +5,4 @@ const kHiUserStyle = const TextStyle(
 
 const kTextFormStyle =
     TextStyle(fontSize: 14, fontFamily: 'DM Sans', color: Colors.grey);
+const kPrimaryColor = const Color(0xFFFAFAFA);

@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class LoginScreen extends GetView<LoginController> {
   //TODO: Later when storing username and password in app memory check if user is logged in if yes, move to another page, else not.
-  final LoginController loginController = Get.put(LoginController());
+  final LoginController loginController = Get.find();
 
   @override
   Widget build(BuildContext context) {
