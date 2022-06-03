@@ -12,6 +12,7 @@ dependencies:
   get: ^4.6.1
   get_storage: ^2.0.3
   shared_preferences: ^2.0.15
+  tab_indicator_styler: ^2.0.0
 
 dev_dependencies:
   flutter_test:

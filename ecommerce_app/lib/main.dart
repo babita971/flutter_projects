@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
             primary: kPrimaryColor,
           ),
         ),
-        initialRoute: '/splashScreen',
+        initialRoute: '/dashboard',
         getPages: [
           GetPage(
             name: '/splashScreen',
