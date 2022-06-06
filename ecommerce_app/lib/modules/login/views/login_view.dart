@@ -236,7 +236,7 @@ class LoginScreen extends GetView<LoginController> {
             children: [
               Container(
                 // message: 'Sign Up with Email Address/Phone number',
-                height: Get.height / 5,
+                height: Get.height / 6,
                 alignment: Alignment(0.0, -0.6),
                 decoration: BoxDecoration(
                   color: Colors.red,
@@ -254,7 +254,7 @@ class LoginScreen extends GetView<LoginController> {
                     loginController.validateLogin();
                   },
                   child: Container(
-                    height: Get.height / 9,
+                    height: Get.height / 10,
                     width: Get.width,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
@@ -281,22 +281,3 @@ class LoginScreen extends GetView<LoginController> {
     );
   }
 }
-
-
-              // Container(
-              //   height: 300,
-              //   width: Get.width,
-              //   alignment: Alignment.bottomCenter,
-              //   decoration: BoxDecoration(
-              //     color: Colors.white,
-              //     borderRadius: BorderRadius.only(
-              //       topRight: Radius.circular(40),
-              //       topLeft: Radius.circular(40),
-              //     ),
-              //   ),
-              //   child: Center(
-              //     child: Text(
-              //       'Let\s get Kicking!',
-              //     ),
-              //   ),
-              // ),

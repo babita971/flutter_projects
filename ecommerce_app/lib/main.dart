@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:ecommerce_app/constants/constants.dart';
+import 'package:ecommerce_app/modules/cart/binding/cart_screen_binding.dart';
+import 'package:ecommerce_app/modules/cart/views/cart_screen_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'modules/dashboard/binding/dashboard_binding.dart';
-import 'modules/dashboard/dashboard_view.dart';
+import 'modules/dashboard/views/dashboard_view.dart';
 import 'modules/login/binding/login_binding.dart';
 import 'modules/login/views/login_view.dart';
 import 'modules/splash/binding/splash_screen_binding.dart';
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
             primary: kPrimaryColor,
           ),
         ),
-        initialRoute: '/dashboard',
+        initialRoute: '/splashScreen',
         getPages: [
           GetPage(
             name: '/splashScreen',
@@ -43,6 +45,11 @@ class MyApp extends StatelessWidget {
             page: () => DashBoard(),
             binding: DashboardBinding(),
           ),
+          GetPage(
+            name: '/cartScreen',
+            page: () => CartScreen(),
+            binding: CartBinding(),
+          )
         ],
         // initialBinding: SplashScreenBinding(), Either give initialbinding or initial route
         home: SplashScreen() //: LoginPage(),

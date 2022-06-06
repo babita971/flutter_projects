@@ -10,16 +10,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SplashController extends GetxController {
   bool isLoggedIn = false;
 
+
   @override
-  void onInit() async{
+  void onInit() async {
     final prefs = await SharedPreferences.getInstance();
-    isLoggedIn = prefs.getBool('isLoggedIn')!;
+    isLoggedIn = prefs.getBool('isLoggedIn') ?? isLoggedIn;
     print('POINTER - $isLoggedIn');
     super.onInit();
   }
 
   @override
-  void onReady()  {
+  void onReady() {
     super.onReady();
 
     if (isLoggedIn) {

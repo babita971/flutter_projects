@@ -1,0 +1,272 @@
+// ignore_for_file: sort_child_properties_last, prefer_const_literals_to_create_immutables, prefer_const_constructors, must_be_immutable, use_key_in_widget_constructors
+
+import 'dart:math';
+
+import 'package:ecommerce_app/constants/constants.dart';
+import 'package:ecommerce_app/modules/dashboard/views/bottom_navigation_bar_view.dart';
+import 'package:ecommerce_app/modules/dashboard/controller/dashboard_controller.dart';
+import 'package:ecommerce_app/modules/dashboard/data/api_result.dart';
+import 'package:ecommerce_app/modules/dashboard/views/kicker_screen_view.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
+import 'package:numeral/numeral.dart';
+import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+
+class DashBoard extends GetView<DashboardController> {
+  final DashboardController dashboardController = Get.find();
+  ApiResult apiResult = ApiResult();
+
+  Widget createKickerGridView() {
+    return GridView.count(
+      crossAxisCount: 2,
+      shrinkWrap: true,
+      childAspectRatio: (Get.width / 3) / (Get.height / 4),
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      children: apiResult.allKickerModals.map((KickerModal) {
+        return GestureDetector(
+          onTap: () {
+            Get.to(() => KickerPage(), arguments: KickerModal);
+            // Get.to(KickerPage(), arguments: KickerModal.kickerName);
+          },
+          child: Card(
+            color: kPrimaryColor,
+            elevation: 0,
+            margin: EdgeInsets.all(8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  flex: 8,
+                  child: Image(
+                      image: AssetImage(KickerModal.kickerImage),
+                      fit: BoxFit.contain),
+                ),
+                Expanded(
+                  child: Text(
+                    KickerModal.kickerName,
+                    // textAlign: TextAlign.start,
+                    style: TextStyle(fontSize: 16.0, fontFamily: 'DM Sans'),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                      horizontal: 12.0,
+                    ),
+                    child: Row(
+                      // mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          '\$${KickerModal.kickerPrice.toString().split('.')[0]}',
+                          style: kkickerPriceStyle,
+                        ),
+                        Text(KickerModal.kickerPrice.toString().split('.')[1],
+                            style: kkickerPriceSuperStyle),
+                        Spacer(),
+                        reviewImagesWidget()
+                      ],
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.topRight,
+                    child: Text(
+                      '${Numeral(KickerModal.kickerSales).format().toString()} people bought this',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: kSecondaryColor,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Container(
+                    alignment: Alignment.topLeft,
+                    padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                    child: RatingBarIndicator(
+                        rating: KickerModal.kickerStars,
+                        itemBuilder: (context, index) => Icon(
+                              Icons.star,
+                              color: Colors.amber,
+                            ),
+                        itemCount: 5,
+                        itemSize: 12.0,
+                        direction: Axis.horizontal),
+                  ),
+                ),
+                // Expanded(
+                //   child: Container(
+                //     alignment: Alignment.topLeft,
+                //     padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                //     child: TextButton(
+                //       style: ButtonStyle(
+                //         // minimumSize: MaterialStateProperty.all(
+                //         //   Size(50, 20),
+                //         // ),
+                //         padding: MaterialStateProperty.all(
+                //             EdgeInsets.symmetric(vertical: 0)),
+                //         // elevation: MaterialStateProperty.all(0),
+                //         foregroundColor:
+                //             MaterialStateProperty.all<Color>(kContrastColor),
+                //         backgroundColor:
+                //             MaterialStateProperty.all(kPrimaryColor),
+                //       ),
+                //       onPressed: () {
+                //         //TODO: add to cart call
+                //         cartController.addProductToCart(KickerModal);
+                //       },
+                //       child: Text(
+                //         cartController.checkItemInCart == true
+                //             ? 'Added to cart'
+                //             : 'Add to cart',
+                //         style: TextStyle(
+                //             color: kContrastColor,
+                //             fontSize: 14,
+                //             fontWeight: FontWeight.bold),
+                //       ),
+                //     ),
+                //   ),
+                // )
+              ],
+            ),
+          ),
+        );
+      }).toList(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        titleSpacing: 0,
+        centerTitle: true,
+        title: Container(height: 40, child: Image.asset('images/Kicker.png')),
+        backgroundColor: Colors.white,
+        iconTheme: const IconThemeData(color: Color.fromARGB(255, 65, 63, 63)),
+        actions: <Widget>[
+          const Padding(
+            padding: EdgeInsets.only(right: 10.0),
+            child: Image(
+              image: AssetImage('images/profile.png'),
+              width: 32,
+              height: 32,
+            ),
+          )
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Image(
+                image: AssetImage('images/Kicker.png'),
+              ),
+            ),
+            ListTile(
+              title: const Text('Profile'),
+              onTap: () {},
+            ),
+            ListTile(
+              title: const Text('Cart'),
+              onTap: () {},
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: kPrimaryColor,
+      body: Column(
+        // mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            margin:
+                const EdgeInsets.only(left: 10, right: 10, top: 40, bottom: 10),
+            width: double.infinity,
+            height: 40,
+            child: const Center(
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: 'e.g Nike Air Jordans',
+                  hintStyle: kTextFormStyle,
+                  suffixIcon: Icon(Icons.search, color: Color(0xFF979797)),
+                  border: InputBorder.none,
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                ),
+              ),
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(color: const Color(0xFFA4A4A4), width: 0.5),
+            ),
+          ),
+          TabBar(
+              controller: dashboardController.categoryTabsController,
+              tabs: dashboardController.categoryTabs,
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicator: DotIndicator(
+                color: kContrastColor,
+                distanceFromCenter: 16,
+                radius: 3,
+                paintingStyle: PaintingStyle.fill,
+              ),
+              // indicator: CircleTabIndicator(color: Colors.green, radius: 4),
+              labelStyle: kSelectedTabStyle,
+              unselectedLabelStyle: kTextFormStyle,
+              isScrollable: true),
+          Expanded(
+            child: TabBarView(
+              controller: dashboardController.categoryTabsController,
+              children: [
+                createKickerGridView(),
+                createKickerGridView(),
+                createKickerGridView(),
+                createKickerGridView(),
+              ],
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        elevation: 0,
+        highlightElevation: 0,
+        backgroundColor: kContrastColor,
+        onPressed: () {},
+        child: Image.asset('images/Scan 10.png'),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      bottomNavigationBar: BottomNavigationBarView(),
+    );
+  }
+}
+
+Widget reviewImagesWidget() {
+  final overlap = 15.0;
+
+  String getRandomImage() {
+    var _random = Random().nextInt(8) + 1;
+    return _random.toString();
+  }
+
+  final items = [
+    Image.asset('images/Ellipse${getRandomImage()}.png'),
+    Image.asset('images/Ellipse${getRandomImage()}.png'),
+    Image.asset('images/Ellipse${getRandomImage()}.png'),
+  ];
+
+  List<Widget> stackLayers = List<Widget>.generate(items.length, (index) {
+    return Padding(
+      padding: EdgeInsets.fromLTRB(index.toDouble() * overlap, 0, 0, 0),
+      child: items[index],
+    );
+  });
+
+  return Stack(children: stackLayers);
+}

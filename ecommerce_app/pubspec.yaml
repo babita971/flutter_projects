@@ -13,6 +13,8 @@ dependencies:
   get_storage: ^2.0.3
   shared_preferences: ^2.0.15
   tab_indicator_styler: ^2.0.0
+  flutter_rating_bar: ^4.0.1
+  numeral: ^2.0.1
 
 dev_dependencies:
   flutter_test:
@@ -23,3 +25,8 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+  fonts:
+    - family: Bilbo-Regular
+      fonts: 
+        - asset: font/Bilbo-Regular.ttf
+
