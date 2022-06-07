@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ApiResult {
   //Let's assume following data from api result
-  final List<KickerModal> allKickerModals = [
+  final List<KickerModal> _allKickerModals = [
     KickerModal(
         kickerPid: 1,
         kickerImage: 'images/klipartz 1.png',
@@ -57,6 +57,14 @@ class ApiResult {
         kickerStars: 4.5,
         kickerColor: Colors.black,
         kickerAvailableColors: [Colors.orange, Colors.green[900], Colors.black],
-        kickerSales: 8000)
+        kickerSales: 8000,)
   ];
+
+  getAllKickerModals() {
+    return _allKickerModals;
+  }
+
+  getAllKickerModalsByIndex(int index) {
+    return _allKickerModals[index];
+  }
 }

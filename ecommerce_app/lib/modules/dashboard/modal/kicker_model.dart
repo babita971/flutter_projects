@@ -8,21 +8,21 @@ class KickerModal {
   final double kickerStars;
   final int kickerSales;
   int kickerQuantity;
-  bool isAddedToCart;
+  var isAddedToCart = false;
   final int kickerPid;
   final Color kickerColor;
   final List<Color?> kickerAvailableColors;
 
   KickerModal(
-      {required this.kickerPid,
-      required this.kickerImage,
-      required this.kickerName,
-      required this.kickerPrice,
-      required this.kickerStars,
-      required this.kickerSales,
-      required this.kickerDescription,
-      required this.kickerColor,
-      required this.kickerAvailableColors,
+      {this.kickerPid = 0,
+      this.kickerImage = '',
+      this.kickerName = '',
+      this.kickerPrice = 0,
+      this.kickerStars = 0.0,
+      this.kickerSales = 0,
+      this.kickerDescription = '',
+      this.kickerColor = Colors.white,
+      this.kickerAvailableColors = const [],
       this.kickerQuantity = 1,
       this.isAddedToCart = false});
 }

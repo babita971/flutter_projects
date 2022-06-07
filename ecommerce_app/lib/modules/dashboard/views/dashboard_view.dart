@@ -5,8 +5,7 @@ import 'dart:math';
 import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/modules/dashboard/views/bottom_navigation_bar_view.dart';
 import 'package:ecommerce_app/modules/dashboard/controller/dashboard_controller.dart';
-import 'package:ecommerce_app/modules/dashboard/data/api_result.dart';
-import 'package:ecommerce_app/modules/kicker_page/views/kicker_screen_view.dart';
+import 'package:ecommerce_app/modules/kicker_page/controller/kicker_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -15,7 +14,7 @@ import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 class DashBoard extends GetView<DashboardController> {
   final DashboardController dashboardController = Get.find();
-  ApiResult apiResult = ApiResult();
+  final KickerScreenController kickerScreenController = Get.find();
 
   Widget createKickerGridView() {
     return GridView.count(
@@ -23,11 +22,14 @@ class DashBoard extends GetView<DashboardController> {
       shrinkWrap: true,
       childAspectRatio: (Get.width / 3) / (Get.height / 4),
       padding: EdgeInsets.symmetric(horizontal: 8),
-      children: apiResult.allKickerModals.map((kickerModal) {
+      children: dashboardController.apiResult
+          .getAllKickerModals()
+          .map<Widget>((kickerModal) {
         return GestureDetector(
           onTap: () {
-            Get.to(() => KickerPage(), arguments: kickerModal);
-            // Get.to(KickerPage(), arguments: KickerModal.kickerName);
+            kickerScreenController.selectedKickerModal.value = kickerModal;
+            Get.toNamed('/kickerScreen');
+            // Get.to(KickerPage(), arguments: kickerModal);
           },
           child: Card(
             color: kPrimaryColor,

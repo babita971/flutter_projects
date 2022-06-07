@@ -7,6 +7,9 @@ import 'package:get/get.dart';
 class CartController extends GetxController {
   var productsInCart = <KickerModal>[].obs;
 
+  void cart() {
+    print('alsalsalsas');
+  }
 
   void addProductToCart(KickerModal product) {
     if (productsInCart.isEmpty) {
@@ -21,11 +24,11 @@ class CartController extends GetxController {
         }
       }
       if (itemCheck == true) {
-        productsInCart
-            .add(product); // Only add if item do not already exists in cart.
+        productsInCart.add(product);
+        // Only add if item do not already exists in cart.
       }
     }
-    product.isAddedToCart = true;
+    // Get.offNamed('/cartScreen');
     Get.snackbar('Yay!', 'Kicker added to cart!');
   }
 
@@ -41,5 +44,7 @@ class CartController extends GetxController {
     return itemInCart;
   }
 
-  void deleteProductToCart(KickerModal product) {}
+  void deleteProductToCart(KickerModal product) {
+    productsInCart.removeWhere((item) => item.kickerPid == product.kickerPid);
+  }
 }

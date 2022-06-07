@@ -2,29 +2,33 @@
 
 import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/modules/cart/controller/cart_screen_controller.dart';
-import 'package:ecommerce_app/modules/dashboard/controller/dashboard_controller.dart';
+import 'package:ecommerce_app/modules/kicker_page/controller/kicker_screen_controller.dart';
 import 'package:ecommerce_app/utils/util_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:numeral/numeral.dart';
 
-class KickerPage extends GetView<DashboardController> {
-  final product = Get.arguments;
+class KickerPage extends GetView<KickerScreenController> {
   final CartController cartController = Get.find();
+  final KickerScreenController kickerScreenController = Get.find();
   final overlap = 30.0;
   var reviewImages = [];
 
   KickerPage() {
+    kickerScreenController.addToCartUI.value =
+        kickerScreenController.selectedKickerModal.value.isAddedToCart;
     reviewImages = [
       Image.asset('images/product3.png'),
       Image.asset('images/product2.png'),
       Image.asset('images/product4.png'),
       CircleAvatar(
         backgroundColor: Color(0xFFE8E8E8),
-        child: Text('+${Numeral(product.kickerSales).format()}',
-            style: TextStyle(
-                fontFamily: 'DM Sans', fontSize: 10, color: kSecondaryColor)),
+        child: Text(
+          '+${Numeral(kickerScreenController.selectedKickerModal.value.kickerSales).format()}',
+          style: TextStyle(
+              fontFamily: 'DM Sans', fontSize: 10, color: kSecondaryColor),
+        ),
       ),
     ];
   }
@@ -42,12 +46,17 @@ class KickerPage extends GetView<DashboardController> {
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Color.fromARGB(255, 65, 63, 63)),
         actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 10.0),
-            child: Image(
-              image: AssetImage('images/Bag 1.png'),
-              width: 32,
-              height: 32,
+          GestureDetector(
+            onTap: (() {
+              Get.toNamed('/cartScreen');
+            }),
+            child: Padding(
+              padding: EdgeInsets.only(right: 10.0),
+              child: Image(
+                image: AssetImage('images/Bag 1.png'),
+                width: 32,
+                height: 32,
+              ),
             ),
           )
         ],
@@ -63,13 +72,14 @@ class KickerPage extends GetView<DashboardController> {
               width: double.infinity,
               child: Image(
                   filterQuality: FilterQuality.high,
-                  image: AssetImage(product.kickerImage),
+                  image: AssetImage(kickerScreenController
+                      .selectedKickerModal.value.kickerImage),
                   fit: BoxFit.fill),
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10),
               child: Text(
-                product.kickerName,
+                kickerScreenController.selectedKickerModal.value.kickerName,
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
@@ -78,7 +88,9 @@ class KickerPage extends GetView<DashboardController> {
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Text(product.kickerDescription,
+              child: Text(
+                  kickerScreenController
+                      .selectedKickerModal.value.kickerDescription,
                   textAlign: TextAlign.start,
                   style: TextStyle(
                       fontSize: 16,
@@ -108,7 +120,8 @@ class KickerPage extends GetView<DashboardController> {
                     child: Row(
                       children: [
                         RatingBarIndicator(
-                            rating: product.kickerStars,
+                            rating: kickerScreenController
+                                .selectedKickerModal.value.kickerStars,
                             itemBuilder: (context, index) => Icon(
                                   Icons.star,
                                   color: Colors.amber,
@@ -117,7 +130,9 @@ class KickerPage extends GetView<DashboardController> {
                             itemSize: 20.0,
                             direction: Axis.horizontal),
                         Text(
-                          product.kickerStars.toString(),
+                          kickerScreenController
+                              .selectedKickerModal.value.kickerStars
+                              .toString(),
                           style: kUnselectedTabStyle,
                         )
                       ],
@@ -145,45 +160,59 @@ class KickerPage extends GetView<DashboardController> {
                   colorsAvailableWidget(),
                   Spacer(),
                   Text(
-                    '\$${product.kickerPrice.toString().split('.')[0]}',
+                    '\$${kickerScreenController.selectedKickerModal.value.kickerPrice.toString().split('.')[0]}',
                     style: kkickerPriceStyleBig,
                   ),
-                  Text(product.kickerPrice.toString().split('.')[1],
+                  Text(
+                      kickerScreenController
+                          .selectedKickerModal.value.kickerPrice
+                          .toString()
+                          .split('.')[1],
                       style: kkickerPriceSuperStyleBig),
                 ],
               ),
             ),
             Spacer(),
-            Container(
-              height: Get.height / 10,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(40),
-                  topLeft: Radius.circular(40),
-                ),
-              ),
-              child: RawMaterialButton(
-                onPressed: () {
-                  cartController.addProductToCart(product);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Add to Cart ',
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, fontFamily: 'DM Sans'),
+            Obx(
+              () {
+                return Container(
+                  height: Get.height / 10,
+                  decoration: BoxDecoration(
+                    color: kickerScreenController.addToCartUI.value == true
+                        ? kContrastColor
+                        : Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(40),
+                      topLeft: Radius.circular(40),
                     ),
-                    ImageIcon(
-                      AssetImage('images/Bag 1.png'),
-                      color: Colors.black,
-                      size: 16,
-                    )
-                  ],
-                ),
-              ),
-            )
+                  ),
+                  child: RawMaterialButton(
+                    onPressed: () {
+                      kickerScreenController.itemAddedToCartCallback();},
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          kickerScreenController.addToCartUI.value == true
+                              ? 'Added to Cart '
+                              : 'Add to Cart ',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'DM Sans'),
+                        ),
+                        kickerScreenController.addToCartUI.value == true
+                            ? Icon(Icons.check_circle)
+                            : ImageIcon(
+                                AssetImage('images/Bag 1.png'),
+                                color: Colors.black,
+                                size: 16,
+                              )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
@@ -193,12 +222,17 @@ class KickerPage extends GetView<DashboardController> {
 
   colorsAvailableWidget() {
     List<Widget> productColors = [];
-    for (var i = 0; i < product.kickerAvailableColors.length; i++) {
+    for (var i = 0;
+        i <
+            kickerScreenController
+                .selectedKickerModal.value.kickerAvailableColors.length;
+        i++) {
       productColors.add(
         Container(
           margin: EdgeInsets.only(right: 2),
           child: CircleAvatar(
-            backgroundColor: product.kickerAvailableColors[i],
+            backgroundColor: kickerScreenController
+                .selectedKickerModal.value.kickerAvailableColors[i],
             radius: 15,
           ),
         ),

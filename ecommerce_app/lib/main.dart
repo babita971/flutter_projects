@@ -2,6 +2,7 @@
 import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/modules/cart/binding/cart_screen_binding.dart';
 import 'package:ecommerce_app/modules/cart/views/cart_screen_view.dart';
+import 'package:ecommerce_app/modules/kicker_page/views/kicker_screen_view.dart';
 import 'package:ecommerce_app/modules/notification/views/notification_screen.dart';
 import 'package:ecommerce_app/modules/wishlist/views/wishlist_screen.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/notificationScreen',
           page: () => NotificationScreen()
+        ),
+        GetPage(
+          name: '/kickerScreen',
+          page: () => KickerPage()
         ),
       ],
       // initialBinding: SplashScreenBinding(), Either give initialbinding or initial route

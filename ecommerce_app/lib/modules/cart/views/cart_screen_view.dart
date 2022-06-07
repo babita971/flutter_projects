@@ -103,8 +103,10 @@ class CartScreen extends GetView<CartController> {
                     fillColor: kContrastColor,
                     child: Text(
                       'Continue with checkout',
-                      style:
-                          TextStyle(color: Colors.white, fontFamily: 'DM Sans'),
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'DM Sans',
+                          fontWeight: FontWeight.bold),
                     ),
                     onPressed: () {
                       Get.snackbar(
