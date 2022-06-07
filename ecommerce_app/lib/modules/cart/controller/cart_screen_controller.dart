@@ -45,6 +45,13 @@ class CartController extends GetxController {
   }
 
   void deleteProductToCart(KickerModal product) {
+    // productsInCart.removeAt(index);
     productsInCart.removeWhere((item) => item.kickerPid == product.kickerPid);
+    productsInCart.refresh();
+  }
+
+  void changeProductQuantity(int index, int updatedQuantity) {
+    productsInCart[index].kickerQuantity = updatedQuantity;
+    productsInCart.refresh();
   }
 }

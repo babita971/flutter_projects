@@ -144,7 +144,9 @@ class DashBoard extends GetView<DashboardController> {
             ),
             ListTile(
               title: const Text('Cart'),
-              onTap: () {},
+              onTap: () {
+                Get.toNamed('\cartScreen');
+              },
             ),
           ],
         ),

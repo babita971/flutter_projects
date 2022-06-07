@@ -13,14 +13,19 @@ class KickerScreenController extends GetxController {
     if (selectedKickerModal.value.isAddedToCart == true) {
       selectedKickerModal.value.isAddedToCart = false;
       cartController.deleteProductToCart(selectedKickerModal.value);
-    } 
-     else if (selectedKickerModal.value.isAddedToCart == false) {
+    } else if (selectedKickerModal.value.isAddedToCart == false) {
       selectedKickerModal.value.isAddedToCart = true;
       cartController.addProductToCart(selectedKickerModal.value);
-    } 
+    }
 
-    // selectedKickerModal.value.isAddedToCart =
-    //     selectedKickerModal.value.isAddedToCart == true ? false : true;
     addToCartUI.value = addToCartUI.value == true ? false : true;
+  }
+
+  void updateAddToCartUI(KickerModal kickerModal) {
+    //Update items when
+    if (kickerModal.isAddedToCart == true || addToCartUI == true) {
+      addToCartUI.value = false;
+      kickerModal.isAddedToCart = false;
+    }
   }
 }

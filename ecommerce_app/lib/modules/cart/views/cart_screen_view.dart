@@ -2,12 +2,14 @@
 
 import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/modules/cart/controller/cart_screen_controller.dart';
+import 'package:ecommerce_app/modules/kicker_page/controller/kicker_screen_controller.dart';
 import 'package:ecommerce_app/utils/util_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CartScreen extends GetView<CartController> {
   final CartController cartController = Get.find();
+  KickerScreenController kickerScreenController = Get.find();
   get cartProducts => cartController.productsInCart;
   @override
   Widget build(BuildContext context) {
@@ -31,20 +33,20 @@ class CartScreen extends GetView<CartController> {
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Color.fromARGB(255, 65, 63, 63)),
       ),
-      body: cartProducts.isNotEmpty
-          ? Column(
-              children: [
-                ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: cartProducts.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            child: Card(
-                              child: Obx(
-                                () => Row(
+      body: Obx(
+        () => cartProducts.isNotEmpty
+            ? Column(
+                children: [
+                  ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: cartProducts.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(8),
+                              child: Card(
+                                child: Row(
                                   children: [
                                     Expanded(
                                       child: Image.asset(
@@ -74,10 +76,6 @@ class CartScreen extends GetView<CartController> {
                                             '\$${cartProducts[index].kickerPrice}',
                                             style: kkickerPriceStyle,
                                           ),
-                                          Text(
-                                            'Qty: ${cartProducts[index].kickerQuantity}',
-                                            style: TextStyle(fontSize: 14),
-                                          ),
                                         ],
                                       ),
                                     ),
@@ -86,46 +84,112 @@ class CartScreen extends GetView<CartController> {
                                         'Total: \$${(cartProducts[index].kickerPrice * cartProducts[index].kickerQuantity).toStringAsFixed(2)}',
                                         style: TextStyle(fontSize: 14),
                                       ),
-                                    )
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Qty: ',
+                                            style: TextStyle(fontSize: 14),
+                                          ),
+                                          DropdownButton<String>(
+                                            iconSize: 16,
+                                            elevation: 0,
+                                            // isExpanded: true,
+                                            style: TextStyle(
+                                                fontFamily: 'DM Sans',
+                                                color: Colors.black,
+                                                fontSize: 14.0),
+                                            value: cartProducts[index]
+                                                .kickerQuantity
+                                                .toString(),
+                                            onChanged: (String? newValue) {
+                                              cartController
+                                                  .changeProductQuantity(index,
+                                                      int.parse(newValue!));
+                                              cartProducts[index]
+                                                      .kickerQuantity =
+                                                  int.parse(newValue);
+                                            },
+                                            items: <String>[
+                                              '1',
+                                              '2',
+                                              '3',
+                                              '4',
+                                              '5'
+                                            ].map<DropdownMenuItem<String>>(
+                                                (String value) {
+                                              return DropdownMenuItem<String>(
+                                                value: value,
+                                                child: Text(value),
+                                              );
+                                            }).toList(),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          IconButton(
+                                            onPressed: () {
+                                              kickerScreenController
+                                                  .updateAddToCartUI(cartProducts[index]);
+                                              cartController
+                                                  .deleteProductToCart(
+                                                      cartProducts[index]);
+                                            },
+                                            icon: Icon(
+                                              Icons.delete,
+                                              size: 16,
+                                              color: kContrastColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      );
-                    }),
-                Container(
-                  width: Get.width,
-                  margin:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                  child: RawMaterialButton(
-                    fillColor: kContrastColor,
-                    child: Text(
-                      'Continue with checkout',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'DM Sans',
-                          fontWeight: FontWeight.bold),
+                          ],
+                        );
+                      }),
+                  Container(
+                    width: Get.width,
+                    margin:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    child: RawMaterialButton(
+                      fillColor: kContrastColor,
+                      child: Text(
+                        'Continue with checkout',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'DM Sans',
+                            fontWeight: FontWeight.bold),
+                      ),
+                      onPressed: () {
+                        Get.snackbar(
+                          "Checkout",
+                          "Implementation Pending!",
+                        );
+                      },
+                      shape: const RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20.0))),
                     ),
-                    onPressed: () {
-                      Get.snackbar(
-                        "Checkout",
-                        "Implementation Pending!",
-                      );
-                    },
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
                   ),
+                ],
+              )
+            : Center(
+                child: Text(
+                  'Cart is Empty.',
+                  style: kUnselectedTabStyle,
                 ),
-              ],
-            )
-          : Center(
-              child: Text(
-                'Cart is Empty.',
-                style: kUnselectedTabStyle,
               ),
-            ),
+      ),
     );
   }
 }
