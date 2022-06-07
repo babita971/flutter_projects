@@ -6,18 +6,9 @@ import 'package:get/get.dart';
 
 class CartController extends GetxController {
   var productsInCart = <KickerModal>[].obs;
-  @override
-  void onInit() async {
-    super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   void addProductToCart(KickerModal product) {
-    print('product id $product.kickerPid');
     if (productsInCart.isEmpty) {
       productsInCart.add(product);
     } else {

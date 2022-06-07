@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class DashboardController extends GetxController
-    with SingleGetTickerProviderMixin {
+    with SingleGetTickerProviderMixin
+     {
   late TabController categoryTabsController;
 
   final List<Tab> categoryTabs = <Tab>[
@@ -23,7 +24,6 @@ class DashboardController extends GetxController
 
   @override
   void onInit() {
-    print('tab init');
     categoryTabsController =
         TabController(length: categoryTabs.length, vsync: this);
     super.onInit();
@@ -31,7 +31,6 @@ class DashboardController extends GetxController
 
   @override
   void onClose() {
-    // TODO: implement onClose
     categoryTabsController.dispose();
     super.onClose();
   }

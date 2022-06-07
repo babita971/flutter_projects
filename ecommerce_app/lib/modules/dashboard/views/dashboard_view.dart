@@ -6,7 +6,7 @@ import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/modules/dashboard/views/bottom_navigation_bar_view.dart';
 import 'package:ecommerce_app/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:ecommerce_app/modules/dashboard/data/api_result.dart';
-import 'package:ecommerce_app/modules/dashboard/views/kicker_screen_view.dart';
+import 'package:ecommerce_app/modules/kicker_page/views/kicker_screen_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -23,10 +23,10 @@ class DashBoard extends GetView<DashboardController> {
       shrinkWrap: true,
       childAspectRatio: (Get.width / 3) / (Get.height / 4),
       padding: EdgeInsets.symmetric(horizontal: 8),
-      children: apiResult.allKickerModals.map((KickerModal) {
+      children: apiResult.allKickerModals.map((kickerModal) {
         return GestureDetector(
           onTap: () {
-            Get.to(() => KickerPage(), arguments: KickerModal);
+            Get.to(() => KickerPage(), arguments: kickerModal);
             // Get.to(KickerPage(), arguments: KickerModal.kickerName);
           },
           child: Card(
@@ -39,12 +39,12 @@ class DashBoard extends GetView<DashboardController> {
                 Expanded(
                   flex: 8,
                   child: Image(
-                      image: AssetImage(KickerModal.kickerImage),
+                      image: AssetImage(kickerModal.kickerImage),
                       fit: BoxFit.contain),
                 ),
                 Expanded(
                   child: Text(
-                    KickerModal.kickerName,
+                    kickerModal.kickerName,
                     // textAlign: TextAlign.start,
                     style: TextStyle(fontSize: 16.0, fontFamily: 'DM Sans'),
                   ),
@@ -58,10 +58,10 @@ class DashBoard extends GetView<DashboardController> {
                       // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          '\$${KickerModal.kickerPrice.toString().split('.')[0]}',
+                          '\$${kickerModal.kickerPrice.toString().split('.')[0]}',
                           style: kkickerPriceStyle,
                         ),
-                        Text(KickerModal.kickerPrice.toString().split('.')[1],
+                        Text(kickerModal.kickerPrice.toString().split('.')[1],
                             style: kkickerPriceSuperStyle),
                         Spacer(),
                         reviewImagesWidget()
@@ -73,7 +73,7 @@ class DashBoard extends GetView<DashboardController> {
                   child: Container(
                     alignment: Alignment.topRight,
                     child: Text(
-                      '${Numeral(KickerModal.kickerSales).format().toString()} people bought this',
+                      '${Numeral(kickerModal.kickerSales).format().toString()} people bought this',
                       style: TextStyle(
                         fontSize: 14,
                         color: kSecondaryColor,
@@ -86,7 +86,7 @@ class DashBoard extends GetView<DashboardController> {
                     alignment: Alignment.topLeft,
                     padding: const EdgeInsets.symmetric(horizontal: 12.0),
                     child: RatingBarIndicator(
-                        rating: KickerModal.kickerStars,
+                        rating: kickerModal.kickerStars,
                         itemBuilder: (context, index) => Icon(
                               Icons.star,
                               color: Colors.amber,
@@ -96,39 +96,6 @@ class DashBoard extends GetView<DashboardController> {
                         direction: Axis.horizontal),
                   ),
                 ),
-                // Expanded(
-                //   child: Container(
-                //     alignment: Alignment.topLeft,
-                //     padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                //     child: TextButton(
-                //       style: ButtonStyle(
-                //         // minimumSize: MaterialStateProperty.all(
-                //         //   Size(50, 20),
-                //         // ),
-                //         padding: MaterialStateProperty.all(
-                //             EdgeInsets.symmetric(vertical: 0)),
-                //         // elevation: MaterialStateProperty.all(0),
-                //         foregroundColor:
-                //             MaterialStateProperty.all<Color>(kContrastColor),
-                //         backgroundColor:
-                //             MaterialStateProperty.all(kPrimaryColor),
-                //       ),
-                //       onPressed: () {
-                //         //TODO: add to cart call
-                //         cartController.addProductToCart(KickerModal);
-                //       },
-                //       child: Text(
-                //         cartController.checkItemInCart == true
-                //             ? 'Added to cart'
-                //             : 'Add to cart',
-                //         style: TextStyle(
-                //             color: kContrastColor,
-                //             fontSize: 14,
-                //             fontWeight: FontWeight.bold),
-                //       ),
-                //     ),
-                //   ),
-                // )
               ],
             ),
           ),
@@ -143,7 +110,7 @@ class DashBoard extends GetView<DashboardController> {
       appBar: AppBar(
         titleSpacing: 0,
         centerTitle: true,
-        title: Container(height: 40, child: Image.asset('images/Kicker.png')),
+        title: SizedBox(height: 40, child: Image.asset('images/Kicker.png')),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Color.fromARGB(255, 65, 63, 63)),
         actions: <Widget>[
@@ -248,11 +215,11 @@ class DashBoard extends GetView<DashboardController> {
 }
 
 Widget reviewImagesWidget() {
-  final overlap = 15.0;
+  const overlap = 15.0;
 
   String getRandomImage() {
-    var _random = Random().nextInt(8) + 1;
-    return _random.toString();
+    var random = Random().nextInt(8) + 1;
+    return random.toString();
   }
 
   final items = [

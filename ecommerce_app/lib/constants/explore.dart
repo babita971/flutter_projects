@@ -1,4 +1,3 @@
-import 'package:ecommerce_app/modules/login/views/login_view.dart';
 // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

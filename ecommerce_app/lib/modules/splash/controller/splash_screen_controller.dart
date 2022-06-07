@@ -15,7 +15,6 @@ class SplashController extends GetxController {
   void onInit() async {
     final prefs = await SharedPreferences.getInstance();
     isLoggedIn = prefs.getBool('isLoggedIn') ?? isLoggedIn;
-    print('POINTER - $isLoggedIn');
     super.onInit();
   }
 
