@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-const kHiUserStyle = TextStyle(
-    fontSize: 22, fontFamily: 'Source Sans Pro', color: Colors.grey);
+const kHiUserStyle =
+    TextStyle(fontSize: 22, fontFamily: 'Source Sans Pro', color: Colors.grey);
 
 const kTextFormStyle =
     TextStyle(fontSize: 16, fontFamily: 'DM Sans', color: Color(0xFF979797));
@@ -47,3 +47,20 @@ const kkickerPriceSuperStyleBig = TextStyle(
     color: Colors.red);
 
 const double kBackIconSIze = 20;
+
+const kCheckOutProductStyle = TextStyle(
+    fontSize: 16.0,
+    // fontWeight: FontWeight.bold,
+    fontFamily: 'DM Sans',
+    color: Colors.black);
+
+const kCheckOutProductStyleSmall =
+    TextStyle(fontSize: 12.0, fontFamily: 'DM Sans', color: kSecondaryColor);
+
+const kBoldCheckoutStyle =
+    TextStyle(fontSize: 18, fontWeight: FontWeight.bold, fontFamily: 'DM Sans');
+
+const kCheckoutFormStyle =
+    TextStyle(fontSize: 14, fontFamily: 'DM Sans', color: Color(0xFF979797));
+
+const kCheckoutPayStyle = TextStyle(fontSize: 14, fontFamily: 'DM Sans');

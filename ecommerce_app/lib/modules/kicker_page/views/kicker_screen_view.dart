@@ -10,14 +10,12 @@ import 'package:get/get.dart';
 import 'package:numeral/numeral.dart';
 
 class KickerPage extends GetView<KickerScreenController> {
-  final CartController cartController = Get.find();
+  final CartScreenController cartController = Get.find();
   final KickerScreenController kickerScreenController = Get.find();
   final overlap = 30.0;
   var reviewImages = [];
 
   KickerPage() {
-    kickerScreenController.addToCartUI.value =
-        kickerScreenController.selectedKickerModal.value.isAddedToCart;
     reviewImages = [
       Image.asset('images/product3.png'),
       Image.asset('images/product2.png'),
@@ -178,7 +176,9 @@ class KickerPage extends GetView<KickerScreenController> {
                 return Container(
                   height: Get.height / 10,
                   decoration: BoxDecoration(
-                    color: kickerScreenController.addToCartUI.value == true
+                    color: kickerScreenController
+                                .selectedKickerModal.value.isAddedToCart ==
+                            true
                         ? kContrastColor
                         : Colors.white,
                     borderRadius: BorderRadius.only(
@@ -188,19 +188,24 @@ class KickerPage extends GetView<KickerScreenController> {
                   ),
                   child: RawMaterialButton(
                     onPressed: () {
-                      kickerScreenController.itemAddedToCartCallback();},
+                      kickerScreenController.itemAddedToCartCallback();
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          kickerScreenController.addToCartUI.value == true
+                          kickerScreenController.selectedKickerModal.value
+                                      .isAddedToCart ==
+                                  true
                               ? 'Added to Cart '
                               : 'Add to Cart ',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontFamily: 'DM Sans'),
                         ),
-                        kickerScreenController.addToCartUI.value == true
+                        kickerScreenController
+                                    .selectedKickerModal.value.isAddedToCart ==
+                                true
                             ? Icon(Icons.check_circle)
                             : ImageIcon(
                                 AssetImage('images/Bag 1.png'),

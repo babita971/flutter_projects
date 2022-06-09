@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class ApiResult {
   //Let's assume following data from api result
-  final List<KickerModal> _allKickerModals = [
-    KickerModal(
+  final List<KickerModel> _allKickerModels = [
+    KickerModel(
         kickerPid: 1,
         kickerImage: 'images/klipartz 1.png',
         kickerName: 'Nike Air Pegasus',
@@ -20,7 +20,7 @@ class ApiResult {
           Colors.blue[900],
           Colors.black
         ]),
-    KickerModal(
+    KickerModel(
         kickerPid: 2,
         kickerImage: 'images/klipartz 2.png',
         kickerName: 'Jordan Jump XV',
@@ -31,7 +31,7 @@ class ApiResult {
         kickerColor: Colors.black,
         kickerAvailableColors: [Colors.red, Colors.brown, Colors.black],
         kickerSales: 5000),
-    KickerModal(
+    KickerModel(
         kickerPid: 3,
         kickerImage: 'images/klipartz 5.png',
         kickerName: 'Nike Raptor',
@@ -47,24 +47,25 @@ class ApiResult {
           Colors.black
         ],
         kickerSales: 1800),
-    KickerModal(
-        kickerPid: 4,
-        kickerImage: 'images/klipartz 6.png',
-        kickerName: 'Basketball Jordans',
-        kickerDescription:
-            'Limited edition nike sneakers, marketed in 2021 over 20+ countries globally',
-        kickerPrice: 110.99,
-        kickerStars: 4.5,
-        kickerColor: Colors.black,
-        kickerAvailableColors: [Colors.orange, Colors.green[900], Colors.black],
-        kickerSales: 8000,)
+    KickerModel(
+      kickerPid: 4,
+      kickerImage: 'images/klipartz 6.png',
+      kickerName: 'Basketball Jordans',
+      kickerDescription:
+          'Limited edition nike sneakers, marketed in 2021 over 20+ countries globally',
+      kickerPrice: 110.99,
+      kickerStars: 4.5,
+      kickerColor: Colors.black,
+      kickerAvailableColors: [Colors.orange, Colors.green[900], Colors.black],
+      kickerSales: 8000,
+    )
   ];
 
   getAllKickerModals() {
-    return _allKickerModals;
+    return _allKickerModels;
   }
 
   getAllKickerModalsByIndex(int index) {
-    return _allKickerModals[index];
+    return _allKickerModels[index];
   }
 }

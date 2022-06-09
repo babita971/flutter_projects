@@ -2,7 +2,6 @@
 
 import 'package:get/get.dart';
 
-
 class BottomNavigationController extends GetxController {
   var tabIndex = 0.obs;
 
@@ -26,4 +25,3 @@ class BottomNavigationController extends GetxController {
       return 0;
   }
 }
-

@@ -4,9 +4,8 @@ import 'package:ecommerce_app/modules/dashboard/modal/kicker_model.dart';
 import 'package:get/get.dart';
 
 class KickerScreenController extends GetxController {
-  final CartController cartController = Get.find();
-  var selectedKickerModal = KickerModal().obs;
-  var addToCartUI = false.obs;
+  final CartScreenController cartController = Get.find();
+  var selectedKickerModal = KickerModel().obs;
 
   void itemAddedToCartCallback() {
     //update UI when kicker gets added to cart
@@ -17,15 +16,11 @@ class KickerScreenController extends GetxController {
       selectedKickerModal.value.isAddedToCart = true;
       cartController.addProductToCart(selectedKickerModal.value);
     }
-
-    addToCartUI.value = addToCartUI.value == true ? false : true;
+    selectedKickerModal.refresh();
   }
 
-  void updateAddToCartUI(KickerModal kickerModal) {
-    //Update items when
-    if (kickerModal.isAddedToCart == true || addToCartUI == true) {
-      addToCartUI.value = false;
-      kickerModal.isAddedToCart = false;
-    }
+  void updateAddToCartUI(KickerModel kickerModal) {
+    kickerModal.isAddedToCart = false;
+    selectedKickerModal.refresh();
   }
 }

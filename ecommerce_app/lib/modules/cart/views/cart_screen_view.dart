@@ -7,8 +7,8 @@ import 'package:ecommerce_app/utils/util_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CartScreen extends GetView<CartController> {
-  final CartController cartController = Get.find();
+class CartScreen extends GetView<CartScreenController> {
+  final CartScreenController cartController = Get.find();
   KickerScreenController kickerScreenController = Get.find();
   get cartProducts => cartController.productsInCart;
   @override
@@ -136,7 +136,8 @@ class CartScreen extends GetView<CartController> {
                                           IconButton(
                                             onPressed: () {
                                               kickerScreenController
-                                                  .updateAddToCartUI(cartProducts[index]);
+                                                  .updateAddToCartUI(
+                                                      cartProducts[index]);
                                               cartController
                                                   .deleteProductToCart(
                                                       cartProducts[index]);
@@ -171,10 +172,8 @@ class CartScreen extends GetView<CartController> {
                             fontWeight: FontWeight.bold),
                       ),
                       onPressed: () {
-                        Get.snackbar(
-                          "Checkout",
-                          "Implementation Pending!",
-                        );
+                        //TODO, check if items are there , then only show button
+                        Get.toNamed('/checkoutScreen');
                       },
                       shape: const RoundedRectangleBorder(
                           borderRadius:

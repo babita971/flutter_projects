@@ -10,6 +10,6 @@ class DashboardBinding extends Bindings {
     Get.lazyPut<DashboardController>(() => DashboardController());
     Get.lazyPut<BottomNavigationController>(() => BottomNavigationController());
     Get.lazyPut<KickerScreenController>(() => KickerScreenController());
-    Get.put(CartController());
+    Get.put(CartScreenController());
   }
 }

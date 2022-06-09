@@ -8,7 +8,7 @@ class DashboardController extends GetxController
     with SingleGetTickerProviderMixin {
   ApiResult apiResult = ApiResult();
   late TabController categoryTabsController;
-  var selectedKickerModal = KickerModal().obs;
+  var selectedKickerModal = KickerModel().obs;
 
   final List<Tab> categoryTabs = <Tab>[
     Tab(

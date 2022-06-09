@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class KickerModal {
+class KickerModel {
   final String kickerImage;
   final String kickerName;
   final String kickerDescription;
@@ -13,7 +13,7 @@ class KickerModal {
   final Color kickerColor;
   final List<Color?> kickerAvailableColors;
 
-  KickerModal(
+  KickerModel(
       {this.kickerPid = 0,
       this.kickerImage = '',
       this.kickerName = '',

@@ -2,14 +2,13 @@
 
 import 'dart:async';
 
-import 'package:ecommerce_app/modules/login/views/login_view.dart';
+import 'package:ecommerce_app/modules/login/views/login_screen_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashController extends GetxController {
   bool isLoggedIn = false;
-
 
   @override
   void onInit() async {
@@ -24,8 +23,8 @@ class SplashController extends GetxController {
 
     if (isLoggedIn) {
       goToDashboard();
-    } else
-      goToLoginScreen();
+    } else {}
+    // goToLoginScreen();
   }
 
   goToDashboard() {

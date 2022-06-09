@@ -4,14 +4,10 @@ import 'package:ecommerce_app/modules/dashboard/modal/kicker_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class CartController extends GetxController {
-  var productsInCart = <KickerModal>[].obs;
+class CartScreenController extends GetxController {
+  var productsInCart = <KickerModel>[].obs;
 
-  void cart() {
-    print('alsalsalsas');
-  }
-
-  void addProductToCart(KickerModal product) {
+  void addProductToCart(KickerModel product) {
     if (productsInCart.isEmpty) {
       productsInCart.add(product);
     } else {
@@ -29,10 +25,10 @@ class CartController extends GetxController {
       }
     }
     // Get.offNamed('/cartScreen');
-    Get.snackbar('Yay!', 'Kicker added to cart!');
+    // Get.snackbar('Yay!', 'Kicker added to cart!');
   }
 
-  bool checkItemInCart(KickerModal product) {
+  bool checkItemInCart(KickerModel product) {
     bool itemInCart = false;
     for (var i = 0; i < productsInCart.length; i++) {
       if (product.kickerPid == productsInCart[i].kickerPid) {
@@ -44,8 +40,7 @@ class CartController extends GetxController {
     return itemInCart;
   }
 
-  void deleteProductToCart(KickerModal product) {
-    // productsInCart.removeAt(index);
+  void deleteProductToCart(KickerModel product) {
     productsInCart.removeWhere((item) => item.kickerPid == product.kickerPid);
     productsInCart.refresh();
   }

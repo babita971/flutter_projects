@@ -77,7 +77,7 @@ class DashBoard extends GetView<DashboardController> {
                     child: Text(
                       '${Numeral(kickerModal.kickerSales).format().toString()} people bought this',
                       style: TextStyle(
-                        fontSize: 14,
+                        fontSize: 12,
                         color: kSecondaryColor,
                       ),
                     ),
@@ -94,7 +94,7 @@ class DashBoard extends GetView<DashboardController> {
                               color: Colors.amber,
                             ),
                         itemCount: 5,
-                        itemSize: 12.0,
+                        itemSize: 14.0,
                         direction: Axis.horizontal),
                   ),
                 ),
