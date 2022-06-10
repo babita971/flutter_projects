@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, sort_child_properties_last
 
 import 'package:ecommerce_app/constants/constants.dart';
-import 'package:ecommerce_app/modules/cart/controller/cart_screen_controller.dart';
 import 'package:ecommerce_app/modules/checkout/controller/checkout_controller.dart';
 import 'package:ecommerce_app/modules/checkout/controller/stepper_controller.dart';
 import 'package:ecommerce_app/utils/util_widgets.dart';
@@ -10,96 +9,89 @@ import 'package:get/get.dart';
 
 class CheckoutPaymentScreen extends GetView<CheckoutScreenController> {
   final CheckoutScreenController checkoutController = Get.find();
-  CartScreenController cartController = Get.find();
   StepperController stepperController = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kPrimaryColor,
-      appBar: AppBar(
-        leading: getBackButton(context),
-        titleSpacing: 0,
-        centerTitle: true,
-        title: Container(
-          height: 40,
-          child: Text(
-            'Checkout',
-            style: TextStyle(
-                fontFamily: 'Bilbo-Regular',
-                color: kContrastColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 30),
-          ),
-        ),
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Color.fromARGB(255, 65, 63, 63)),
-      ),
-      body: Obx(
-        () => Theme(
-          data: ThemeData(
-            colorScheme: Theme.of(context).colorScheme.copyWith(
-                  primary: kContrastColor,
-                  background: Colors.red,
-                  secondary: Colors.green,
+    return Form(
+      key: checkoutController.paymentFormKey,
+      child: Card(
+        elevation: 10,
+        child: Container(
+          color: Colors.white,
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Text('Payment Details', style: kBoldCheckoutStyle),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  controller: checkoutController.cardNameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Name cannot be empty.';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                      labelText: 'Name',
+                      hintText: 'Enter your name on the card.',
+                      labelStyle: kCheckoutFormStyle,
+                      hintStyle: kCheckoutFormStyle),
                 ),
-          ),
-          child: Stepper(
-            currentStep: stepperController.index.value,
-            type: StepperType.horizontal,
-            onStepCancel: stepperController.onStepCancelled,
-            onStepContinue: stepperController.onStepContinued,
-            onStepTapped: (index) {
-              stepperController.index.value = index;
-            },
-            steps: <Step>[
-              Step(
-                title: new Text('Account'),
-                content: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      decoration: InputDecoration(labelText: 'Email Address'),
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(labelText: 'Password'),
-                    ),
-                  ],
-                ),
-                isActive: stepperController.index.value >= 0,
-                state: stepperController.index.value >= 0
-                    ? StepState.complete
-                    : StepState.disabled,
               ),
-              Step(
-                title: new Text('Address'),
-                content: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      decoration: InputDecoration(labelText: 'Home Address'),
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(labelText: 'Postcode'),
-                    ),
-                  ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  controller: checkoutController.cardNumController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Card number cannot be empty.';
+                    }
+                    if (!GetUtils.isNumericOnly(value) || value.length != 16) {
+                      return 'Invalid card number.';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                      labelText: 'Card Number',
+                      hintText: 'Enter your card number.',
+                      labelStyle: kCheckoutFormStyle,
+                      hintStyle: kCheckoutFormStyle),
                 ),
-                isActive: stepperController.index.value >= 0,
-                state: stepperController.index.value >= 1
-                    ? StepState.complete
-                    : StepState.disabled,
               ),
-              Step(
-                title: new Text('Mobile Number'),
-                content: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      decoration: InputDecoration(labelText: 'Mobile Number'),
-                    ),
-                  ],
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: ExpirationFormField(
+                  controller: checkoutController.expDateController,
+                  decoration: InputDecoration(
+                      labelText: "Card Expiration",
+                      hintText: "MM/YY",
+                      labelStyle: kCheckoutFormStyle,
+                      hintStyle: kCheckoutFormStyle),
                 ),
-                isActive: stepperController.index.value >= 0,
-                state: stepperController.index.value >= 2
-                    ? StepState.complete
-                    : StepState.disabled,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextFormField(
+                  obscureText: true,
+                  controller: checkoutController.cvvController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'CVV number cannot be empty.';
+                    }
+                    if (!GetUtils.isNumericOnly(value) || value.length != 3) {
+                      return 'Invalid CVV number.';
+                    }
+                    return null;
+                  },
+                  decoration: const InputDecoration(
+                      labelText: 'CVV Number',
+                      hintText: 'Enter your CVV number.',
+                      labelStyle: kCheckoutFormStyle,
+                      hintStyle: kCheckoutFormStyle),
+                ),
               ),
             ],
           ),

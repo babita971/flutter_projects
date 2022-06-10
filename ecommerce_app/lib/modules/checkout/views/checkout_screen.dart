@@ -6,6 +6,7 @@ import 'package:ecommerce_app/modules/checkout/controller/checkout_controller.da
 import 'package:ecommerce_app/modules/checkout/controller/stepper_controller.dart';
 import 'package:ecommerce_app/modules/checkout/views/checkout_address_screen.dart';
 import 'package:ecommerce_app/modules/checkout/views/checkout_orders_screen.dart';
+import 'package:ecommerce_app/modules/checkout/views/checkout_payment_screen.dart';
 import 'package:ecommerce_app/utils/util_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -61,8 +62,10 @@ class CheckoutScreen extends GetView<CheckoutScreenController> {
                         decoration: BoxDecoration(
                             color: kContrastColor,
                             borderRadius: BorderRadius.circular(50)),
-                        child: const Text(
-                          'Continue',
+                        child: Text(
+                          stepperController.index == 2
+                              ? 'Confirm and Pay'
+                              : 'Continue',
                           style: TextStyle(
                               color: Colors.white, fontFamily: 'DM Sans'),
                         ),
@@ -120,13 +123,7 @@ class CheckoutScreen extends GetView<CheckoutScreenController> {
                   'Pay',
                   style: TextStyle(fontSize: 12, fontFamily: 'DM Sans'),
                 ),
-                content: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      decoration: InputDecoration(labelText: 'Mobile Number'),
-                    ),
-                  ],
-                ),
+                content: CheckoutPaymentScreen(),
                 isActive: stepperController.index.value >= 0,
                 state: stepperController.index.value >= 2
                     ? StepState.complete

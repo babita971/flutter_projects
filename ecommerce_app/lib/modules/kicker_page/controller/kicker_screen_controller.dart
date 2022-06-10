@@ -23,4 +23,9 @@ class KickerScreenController extends GetxController {
     kickerModal.isAddedToCart = false;
     selectedKickerModal.refresh();
   }
+
+  void resetSelectedKicker() {
+    selectedKickerModal.value = KickerModel();
+    selectedKickerModal.refresh();
+  }
 }

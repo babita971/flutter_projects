@@ -25,7 +25,7 @@ class CartScreenController extends GetxController {
       }
     }
     // Get.offNamed('/cartScreen');
-    // Get.snackbar('Yay!', 'Kicker added to cart!');
+    Get.snackbar('Yay!', 'Kicker added to cart!');
   }
 
   bool checkItemInCart(KickerModel product) {

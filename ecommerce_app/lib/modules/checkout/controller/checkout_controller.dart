@@ -1,19 +1,33 @@
+import 'dart:async';
+
 import 'package:ecommerce_app/modules/cart/controller/cart_screen_controller.dart';
+import 'package:ecommerce_app/modules/dashboard/modal/kicker_model.dart';
+import 'package:ecommerce_app/modules/kicker_page/controller/kicker_screen_controller.dart';
+import 'package:ecommerce_app/utils/util_widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class CheckoutScreenController extends GetxController {
   var totalPrice = 0.0.obs;
   var subTotalPrice = 0.0.obs;
+  var placedOrders = <KickerModel>[].obs;
   final tax = 0.05; //Setting default tax as 5 %.
   final GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> paymentFormKey = GlobalKey<FormState>();
 
+  //Address
   final address1Controller = TextEditingController();
   final address2Controller = TextEditingController();
   final cityController = TextEditingController();
   final countryController = TextEditingController();
   final zipController = TextEditingController();
   final phoneController = TextEditingController();
+
+  //Payment
+  final cardNameController = TextEditingController();
+  final cardNumController = TextEditingController();
+  final expDateController = TextEditingController();
+  final cvvController = TextEditingController();
 
   String cardName = 'empty'.obs();
   String cardNumber = 'empty'.obs();
@@ -22,15 +36,15 @@ class CheckoutScreenController extends GetxController {
   int cvv = 0.obs();
 
   CartScreenController cartController = Get.find();
+  KickerScreenController kickerScreenController = Get.find();
 
 // on init calculate total orders
 // fetch orders from cart and calculate total price
-//fetch addresses if user has stored any
+// fetch addresses if user has stored any
   @override
   void onInit() {
     super.onInit();
     calculateTotalAmount();
-    //call to calc method
   }
 
   void calculateTotalAmount() {
@@ -42,14 +56,29 @@ class CheckoutScreenController extends GetxController {
   }
 
   void deleteAllItemsFromCart() {
-    //TODO:
+    for (int i = 0; i < cartController.productsInCart.length; i++) {
+      cartController.deleteProductToCart(cartController.productsInCart[i]);
+    }
+    totalPrice.value = 0;
+    subTotalPrice.value = 0;
+    kickerScreenController.resetSelectedKicker();
+    cartController.productsInCart.clear();
+    cartController.productsInCart.refresh;
+    getAllOrdersDeletedDialog();
+    Timer(const Duration(seconds: 2), () => {Get.offNamed('/dashboard')});
   }
 
   bool validateAddressForm() {
-    if (addressFormKey.currentState!.validate()) {
-      //true
-      return true;
-    }
-    return false;
+    // if (addressFormKey.currentState!.validate()) {
+    return true;
+    // }
+    // return false;
+  }
+
+  bool validatePaymentForm() {
+    // if (paymentFormKey.currentState!.validate()) {
+    return true;
+    // }
+    // return false;
   }
 }

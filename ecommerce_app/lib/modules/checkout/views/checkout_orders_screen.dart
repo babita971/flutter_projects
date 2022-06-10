@@ -18,7 +18,7 @@ class TotalOrderScreen extends GetView<CheckoutScreenController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Checkouts',
+            'Order Summary',
             style: kBoldCheckoutStyle,
           ),
           Row(
@@ -32,17 +32,17 @@ class TotalOrderScreen extends GetView<CheckoutScreenController> {
                       fontFamily: 'DM Sans'),
                 ),
               ),
-              IconButton(
-                onPressed: () {
-                  checkoutController.deleteAllItemsFromCart();
-                  //TODO: add all delete button and redirect to dashboard.
-                },
-                icon: Icon(
-                  Icons.delete,
-                  size: 20,
-                  color: Colors.black,
-                ),
-              ),
+              // IconButton(
+              //   onPressed: () {
+              //     checkoutController.deleteAllItemsFromCart();
+              //     //TODO: add all delete button and redirect to dashboard.
+              //   },
+              //   icon: Icon(
+              //     Icons.delete,
+              //     size: 20,
+              //     color: Colors.black,
+              //   ),
+              // ),
             ],
           ),
           Divider(
@@ -141,7 +141,7 @@ class TotalOrderScreen extends GetView<CheckoutScreenController> {
                   style: kCheckOutProductStyle,
                 )),
                 Text(
-                  '\$${checkoutController.totalPrice.value..toStringAsFixed(2)}',
+                  '\$${checkoutController.totalPrice.value.toStringAsFixed(2)}',
                   style: kCheckOutProductStyle,
                 ),
               ],

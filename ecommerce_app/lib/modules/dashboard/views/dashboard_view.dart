@@ -29,7 +29,6 @@ class DashBoard extends GetView<DashboardController> {
           onTap: () {
             kickerScreenController.selectedKickerModal.value = kickerModal;
             Get.toNamed('/kickerScreen');
-            // Get.to(KickerPage(), arguments: kickerModal);
           },
           child: Card(
             color: kPrimaryColor,
@@ -139,13 +138,21 @@ class DashBoard extends GetView<DashboardController> {
               ),
             ),
             ListTile(
-              title: const Text('Profile'),
-              onTap: () {},
+              title: const Text('Order History'),
+              onTap: () {
+                Get.toNamed('/orderHistoryScreen');
+              },
             ),
             ListTile(
               title: const Text('Cart'),
               onTap: () {
-                Get.toNamed('\cartScreen');
+                Get.toNamed('/cartScreen');
+              },
+            ),
+            ListTile(
+              title: const Text('Delete your account'),
+              onTap: () {
+                //TODO:Clear all stored information and sign out.Also create sign up page.
               },
             ),
           ],

@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 class CartScreen extends GetView<CartScreenController> {
   final CartScreenController cartController = Get.find();
   KickerScreenController kickerScreenController = Get.find();
-  get cartProducts => cartController.productsInCart;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,12 +33,12 @@ class CartScreen extends GetView<CartScreenController> {
         iconTheme: const IconThemeData(color: Color.fromARGB(255, 65, 63, 63)),
       ),
       body: Obx(
-        () => cartProducts.isNotEmpty
+        () => cartController.productsInCart.isNotEmpty
             ? Column(
                 children: [
                   ListView.builder(
                       shrinkWrap: true,
-                      itemCount: cartProducts.length,
+                      itemCount: cartController.productsInCart.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Column(
                           children: [
@@ -50,7 +49,7 @@ class CartScreen extends GetView<CartScreenController> {
                                   children: [
                                     Expanded(
                                       child: Image.asset(
-                                          cartProducts[index].kickerImage),
+                                          cartController.productsInCart[index].kickerImage),
                                     ),
                                     Expanded(
                                       flex: 2,
@@ -67,13 +66,13 @@ class CartScreen extends GetView<CartScreenController> {
                                           //       fontSize: 14),
                                           // ),
                                           Text(
-                                            cartProducts[index].kickerName,
+                                            cartController.productsInCart[index].kickerName,
                                             style: TextStyle(
                                                 // fontWeight: FontWeight.bold,
                                                 fontSize: 14),
                                           ),
                                           Text(
-                                            '\$${cartProducts[index].kickerPrice}',
+                                            '\$${cartController.productsInCart[index].kickerPrice}',
                                             style: kkickerPriceStyle,
                                           ),
                                         ],
@@ -81,7 +80,7 @@ class CartScreen extends GetView<CartScreenController> {
                                     ),
                                     Expanded(
                                       child: Text(
-                                        'Total: \$${(cartProducts[index].kickerPrice * cartProducts[index].kickerQuantity).toStringAsFixed(2)}',
+                                        'Total: \$${(cartController.productsInCart[index].kickerPrice * cartController.productsInCart[index].kickerQuantity).toStringAsFixed(2)}',
                                         style: TextStyle(fontSize: 14),
                                       ),
                                     ),
@@ -102,14 +101,14 @@ class CartScreen extends GetView<CartScreenController> {
                                                 fontFamily: 'DM Sans',
                                                 color: Colors.black,
                                                 fontSize: 14.0),
-                                            value: cartProducts[index]
+                                            value: cartController.productsInCart[index]
                                                 .kickerQuantity
                                                 .toString(),
                                             onChanged: (String? newValue) {
                                               cartController
                                                   .changeProductQuantity(index,
                                                       int.parse(newValue!));
-                                              cartProducts[index]
+                                              cartController.productsInCart[index]
                                                       .kickerQuantity =
                                                   int.parse(newValue);
                                             },
@@ -137,10 +136,10 @@ class CartScreen extends GetView<CartScreenController> {
                                             onPressed: () {
                                               kickerScreenController
                                                   .updateAddToCartUI(
-                                                      cartProducts[index]);
+                                                      cartController.productsInCart[index]);
                                               cartController
                                                   .deleteProductToCart(
-                                                      cartProducts[index]);
+                                                      cartController.productsInCart[index]);
                                             },
                                             icon: Icon(
                                               Icons.delete,
@@ -182,11 +181,18 @@ class CartScreen extends GetView<CartScreenController> {
                   ),
                 ],
               )
-            : Center(
-                child: Text(
-                  'Cart is Empty.',
-                  style: kUnselectedTabStyle,
-                ),
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                // ignore: prefer_const_literals_to_create_immutables
+                children: [
+                  Image(
+                    image: AssetImage('images/cart_empty.png'),
+                  ),
+                  Text(
+                    'Cart is Empty.',
+                    style: kUnselectedTabStyle,
+                  ),
+                ],
               ),
       ),
     );

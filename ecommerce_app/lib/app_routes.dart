@@ -1,5 +1,8 @@
 import 'package:ecommerce_app/modules/checkout/binding/checkout_binding.dart';
 import 'package:ecommerce_app/modules/checkout/views/checkout_screen.dart';
+import 'package:ecommerce_app/modules/order_history/binding/order_history_binding.dart';
+import 'package:ecommerce_app/modules/order_history/controller/order_history_controller.dart';
+import 'package:ecommerce_app/modules/order_history/views/order_history_screen.dart';
 import 'package:get/get.dart';
 
 import 'package:ecommerce_app/modules/cart/binding/cart_screen_binding.dart';
@@ -42,6 +45,11 @@ class Routes {
       name: '/checkoutScreen',
       page: () => CheckoutScreen(),
       binding: CheckoutBinding(),
+    ),
+    GetPage(
+      name: '/orderHistoryScreen',
+      page: () => OrderHistoryScreen(),
+      binding: OrderHistoryBinding(),
     ),
     GetPage(name: '/wishlistScreen', page: () => WishlistScreen()),
     GetPage(name: '/notificationScreen', page: () => NotificationScreen()),
