@@ -24,8 +24,12 @@ class CartScreenController extends GetxController {
         // Only add if item do not already exists in cart.
       }
     }
-    // Get.offNamed('/cartScreen');
-    Get.snackbar('Yay!', 'Kicker added to cart!');
+    // Get.offNamed(Paths.CART);
+    Get.snackbar(
+      'Yay!',
+      'Kicker added to cart!',
+      duration: const Duration(seconds: 1),
+    );
   }
 
   bool checkItemInCart(KickerModel product) {

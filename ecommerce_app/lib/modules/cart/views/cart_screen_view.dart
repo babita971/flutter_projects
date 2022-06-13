@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, sort_child_properties_last
 
+import 'package:ecommerce_app/app_pages.dart';
 import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/modules/cart/controller/cart_screen_controller.dart';
 import 'package:ecommerce_app/modules/kicker_page/controller/kicker_screen_controller.dart';
@@ -48,8 +49,8 @@ class CartScreen extends GetView<CartScreenController> {
                                 child: Row(
                                   children: [
                                     Expanded(
-                                      child: Image.asset(
-                                          cartController.productsInCart[index].kickerImage),
+                                      child: Image.asset(cartController
+                                          .productsInCart[index].kickerImage),
                                     ),
                                     Expanded(
                                       flex: 2,
@@ -66,7 +67,8 @@ class CartScreen extends GetView<CartScreenController> {
                                           //       fontSize: 14),
                                           // ),
                                           Text(
-                                            cartController.productsInCart[index].kickerName,
+                                            cartController.productsInCart[index]
+                                                .kickerName,
                                             style: TextStyle(
                                                 // fontWeight: FontWeight.bold,
                                                 fontSize: 14),
@@ -101,14 +103,16 @@ class CartScreen extends GetView<CartScreenController> {
                                                 fontFamily: 'DM Sans',
                                                 color: Colors.black,
                                                 fontSize: 14.0),
-                                            value: cartController.productsInCart[index]
+                                            value: cartController
+                                                .productsInCart[index]
                                                 .kickerQuantity
                                                 .toString(),
                                             onChanged: (String? newValue) {
                                               cartController
                                                   .changeProductQuantity(index,
                                                       int.parse(newValue!));
-                                              cartController.productsInCart[index]
+                                              cartController
+                                                      .productsInCart[index]
                                                       .kickerQuantity =
                                                   int.parse(newValue);
                                             },
@@ -136,10 +140,14 @@ class CartScreen extends GetView<CartScreenController> {
                                             onPressed: () {
                                               kickerScreenController
                                                   .updateAddToCartUI(
-                                                      cartController.productsInCart[index]);
+                                                      cartController
+                                                              .productsInCart[
+                                                          index]);
                                               cartController
                                                   .deleteProductToCart(
-                                                      cartController.productsInCart[index]);
+                                                      cartController
+                                                              .productsInCart[
+                                                          index]);
                                             },
                                             icon: Icon(
                                               Icons.delete,
@@ -172,7 +180,7 @@ class CartScreen extends GetView<CartScreenController> {
                       ),
                       onPressed: () {
                         //TODO, check if items are there , then only show button
-                        Get.toNamed('/checkoutScreen');
+                        Get.toNamed(Paths.CHECKOUT);
                       },
                       shape: const RoundedRectangleBorder(
                           borderRadius:

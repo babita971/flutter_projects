@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ecommerce_app/app_pages.dart';
 import 'package:ecommerce_app/modules/cart/controller/cart_screen_controller.dart';
 import 'package:ecommerce_app/modules/dashboard/modal/kicker_model.dart';
 import 'package:ecommerce_app/modules/kicker_page/controller/kicker_screen_controller.dart';
@@ -10,7 +11,6 @@ import 'package:get/get.dart';
 class CheckoutScreenController extends GetxController {
   var totalPrice = 0.0.obs;
   var subTotalPrice = 0.0.obs;
-  var placedOrders = <KickerModel>[].obs;
   final tax = 0.05; //Setting default tax as 5 %.
   final GlobalKey<FormState> addressFormKey = GlobalKey<FormState>();
   final GlobalKey<FormState> paymentFormKey = GlobalKey<FormState>();
@@ -65,7 +65,7 @@ class CheckoutScreenController extends GetxController {
     cartController.productsInCart.clear();
     cartController.productsInCart.refresh;
     getAllOrdersDeletedDialog();
-    Timer(const Duration(seconds: 2), () => {Get.offNamed('/dashboard')});
+    Timer(const Duration(seconds: 2), () => {Get.offNamed(Paths.DASHBOARD)});
   }
 
   bool validateAddressForm() {

@@ -1,5 +1,5 @@
-class User {
-  String userName;
+class UserModal {
+  String email;
   String password;
-  User({this.userName = '', this.password = ''});
+  UserModal({this.email = '', this.password = ''});
 }

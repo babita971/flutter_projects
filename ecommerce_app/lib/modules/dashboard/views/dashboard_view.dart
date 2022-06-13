@@ -2,6 +2,7 @@
 
 import 'dart:math';
 
+import 'package:ecommerce_app/app_pages.dart';
 import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/modules/dashboard/views/bottom_navigation_bar_view.dart';
 import 'package:ecommerce_app/modules/dashboard/controller/dashboard_controller.dart';
@@ -28,7 +29,7 @@ class DashBoard extends GetView<DashboardController> {
         return GestureDetector(
           onTap: () {
             kickerScreenController.selectedKickerModal.value = kickerModal;
-            Get.toNamed('/kickerScreen');
+            Get.toNamed(Paths.PRODUCT_PAGE);
           },
           child: Card(
             color: kPrimaryColor,
@@ -140,19 +141,26 @@ class DashBoard extends GetView<DashboardController> {
             ListTile(
               title: const Text('Order History'),
               onTap: () {
-                Get.toNamed('/orderHistoryScreen');
+                Get.toNamed(Paths.ORDER_HISTORY);
               },
             ),
             ListTile(
               title: const Text('Cart'),
               onTap: () {
-                Get.toNamed('/cartScreen');
+                Get.toNamed(Paths.CART);
               },
             ),
             ListTile(
               title: const Text('Delete your account'),
               onTap: () {
                 //TODO:Clear all stored information and sign out.Also create sign up page.
+              },
+            ),
+            
+            ListTile(
+              title: const Text('Profile'),
+              onTap: () {
+                Get.toNamed(Paths.PROFILE);
               },
             ),
           ],

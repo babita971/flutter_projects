@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors,prefer_const_literals_to_create_immutables
 
+import 'package:ecommerce_app/app_pages.dart';
 import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/modules/cart/controller/cart_screen_controller.dart';
 import 'package:ecommerce_app/modules/kicker_page/controller/kicker_screen_controller.dart';
@@ -46,7 +47,7 @@ class KickerPage extends GetView<KickerScreenController> {
         actions: <Widget>[
           GestureDetector(
             onTap: (() {
-              Get.toNamed('/cartScreen');
+              Get.toNamed(Paths.CART);
             }),
             child: Padding(
               padding: EdgeInsets.only(right: 10.0),

@@ -7,7 +7,8 @@ class OrderHistoryBinding extends Bindings {
   @override
   void dependencies() {
     // TODO: implement dependencies
-    Get.lazyPut<OrderHistoryController>(() => OrderHistoryController());
+    // Get.lazyPut<OrderHistoryController>(() => OrderHistoryController());
+    Get.put(OrderHistoryController());
     Get.lazyPut<CheckoutScreenController>(() => CheckoutScreenController());
   }
 }

@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sized_box_for_whitespace, sort_child_properties_last
 
+import 'package:ecommerce_app/app_pages.dart';
 import 'package:ecommerce_app/constants/constants.dart';
-import 'package:ecommerce_app/modules/checkout/controller/checkout_controller.dart';
 import 'package:ecommerce_app/modules/kicker_page/controller/kicker_screen_controller.dart';
 import 'package:ecommerce_app/modules/order_history/controller/order_history_controller.dart';
 import 'package:ecommerce_app/utils/util_widgets.dart';
@@ -9,8 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class OrderHistoryScreen extends GetView<OrderHistoryController> {
-  CheckoutScreenController checkoutController = Get.find();
+  OrderHistoryController orderHistoryController = Get.find();
   KickerScreenController kickerScreenController = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +39,8 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
   }
 
   buildOrderHistoryWidget() {
-    if (checkoutController.placedOrders.length != 0) {
+    print(orderHistoryController.placedOrders.length);
+    if (orderHistoryController.placedOrders.length != 0) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,15 +62,15 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
           ListView.builder(
             shrinkWrap: true,
             padding: const EdgeInsets.all(8),
-            itemCount: checkoutController.placedOrders.length,
+            itemCount: orderHistoryController.placedOrders.length,
             itemBuilder: (BuildContext context, int index) {
               return GestureDetector(
                 onTap: () {
                   kickerScreenController.selectedKickerModal.value =
-                      checkoutController.placedOrders[index];
+                      orderHistoryController.placedOrders[index];
                   kickerScreenController
                       .selectedKickerModal.value.isAddedToCart = false;
-                  Get.toNamed('/kickerScreen');
+                  Get.toNamed(Paths.PRODUCT_PAGE);
                 },
                 child: Card(
                   color: Colors.white,
@@ -78,8 +80,7 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
                         height: Get.height / 8,
                         width: Get.width / 3,
                         child: Image(
-                          image: AssetImage(checkoutController
-                              .placedOrders[index].kickerImage),
+                          image: AssetImage(orderHistoryController.placedOrders[index].kickerImage),
                         ),
                       ),
                       Expanded(
@@ -89,16 +90,15 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                checkoutController
-                                    .placedOrders[index].kickerName,
+                                orderHistoryController.placedOrders[index].kickerName,
                                 style: kCheckOutProductStyle,
                               ),
                               Text(
-                                'Qty : ${checkoutController.placedOrders[index].kickerQuantity.toString()}',
+                                'Qty : ${orderHistoryController.placedOrders[index].kickerQuantity.toString()}',
                                 style: kCheckOutProductStyleSmall,
                               ),
                               Text(
-                                '\$${checkoutController.placedOrders[index].kickerPrice.toString()}',
+                                '\$${orderHistoryController.placedOrders[index].kickerPrice.toString()}',
                                 style: kCheckOutProductStyleSmall,
                               ),
                             ],
