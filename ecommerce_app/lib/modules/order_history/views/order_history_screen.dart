@@ -15,6 +15,7 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kPrimaryColor,
       appBar: AppBar(
         leading: getBackButton(context),
@@ -25,10 +26,9 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
           child: Text(
             'Order History',
             style: TextStyle(
-                fontFamily: 'Bilbo-Regular',
+                fontFamily: 'Actonia PERSONAL',
                 color: kContrastColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 30),
+                fontSize: 35),
           ),
         ),
         backgroundColor: Colors.white,
@@ -80,7 +80,8 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
                         height: Get.height / 8,
                         width: Get.width / 3,
                         child: Image(
-                          image: AssetImage(orderHistoryController.placedOrders[index].kickerImage),
+                          image: AssetImage(orderHistoryController
+                              .placedOrders[index].kickerImage),
                         ),
                       ),
                       Expanded(
@@ -90,7 +91,8 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
                             crossAxisAlignment: CrossAxisAlignment.end,
                             children: [
                               Text(
-                                orderHistoryController.placedOrders[index].kickerName,
+                                orderHistoryController
+                                    .placedOrders[index].kickerName,
                                 style: kCheckOutProductStyle,
                               ),
                               Text(

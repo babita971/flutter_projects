@@ -109,6 +109,7 @@ class DashBoard extends GetView<DashboardController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         titleSpacing: 0,
         centerTitle: true,
@@ -139,9 +140,9 @@ class DashBoard extends GetView<DashboardController> {
               ),
             ),
             ListTile(
-              title: const Text('Order History'),
+              title: const Text('Profile'),
               onTap: () {
-                Get.toNamed(Paths.ORDER_HISTORY);
+                Get.toNamed(Paths.PROFILE);
               },
             ),
             ListTile(
@@ -151,16 +152,16 @@ class DashBoard extends GetView<DashboardController> {
               },
             ),
             ListTile(
-              title: const Text('Delete your account'),
+              title: const Text('Order History'),
               onTap: () {
-                //TODO:Clear all stored information and sign out.Also create sign up page.
+                Get.toNamed(Paths.ORDER_HISTORY);
               },
             ),
-            
             ListTile(
-              title: const Text('Profile'),
+              title: const Text('Sign out'),
               onTap: () {
-                Get.toNamed(Paths.PROFILE);
+                dashboardController.signOutUser();
+                // TODO: Add this in profile screen and Clear all stored information and sign out.Also create sign up page.
               },
             ),
           ],

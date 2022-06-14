@@ -1,3 +1,5 @@
+import 'package:ecommerce_app/modules/profile/binding/profile_binding.dart';
+import 'package:ecommerce_app/modules/profile/views/profile_screen.dart';
 import 'package:ecommerce_app/modules/signup/binding/signup_binding.dart';
 import 'package:ecommerce_app/modules/signup/views/signup_screen_view.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,9 +61,13 @@ class Routes {
       page: () => OrderHistoryScreen(),
       binding: OrderHistoryBinding(),
     ),
+    GetPage(
+      name: Paths.PROFILE,
+      page: () => ProfileScreen(),
+      binding: ProfileBinding(),
+    ),
     GetPage(name: Paths.WISHLIST, page: () => WishlistScreen()),
     GetPage(name: Paths.NOTIFICATIONS, page: () => NotificationScreen()),
     GetPage(name: Paths.PRODUCT_PAGE, page: () => KickerPage()),
-    GetPage(name: Paths.PROFILE, page: () => KickerPage()),
   ];
 }

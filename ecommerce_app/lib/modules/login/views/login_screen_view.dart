@@ -11,10 +11,10 @@ import 'package:get/get.dart';
 class LoginScreen extends GetView<LoginController> {
   final LoginController loginController = Get.find();
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: FutureBuilder(
             future: loginController.initializeFirebase(),
             builder: (context, snapshot) {
@@ -84,10 +84,12 @@ class LoginScreen extends GetView<LoginController> {
                                   controller:
                                       loginController.passwordEditingController,
                                   validator: (value) {
-                                    // if (!GetUtils.isUsername(loginController
-                                    //     .passwordEditingController.text)) {
-                                    //   return 'Invalid password.';
-                                    // }
+                                    if (loginController
+                                        .passwordEditingController
+                                        .text
+                                        .isEmpty) {
+                                      return 'Invalid password.';
+                                    }
                                     if (loginController
                                             .passwordEditingController
                                             .text

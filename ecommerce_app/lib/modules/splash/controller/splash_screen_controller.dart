@@ -24,15 +24,16 @@ class SplashController extends GetxController {
 
     if (isLoggedIn) {
       goToDashboard();
-    } else {}
-    // goToLoginScreen();
+    } else {
+      goToLoginScreen();
+    }
   }
 
   goToDashboard() {
-    // Timer(const Duration(seconds: 3), () => {Get.offAllNamed(Paths.DASHBOARD)});
+    Timer(const Duration(seconds: 1), () => {Get.offAllNamed(Paths.DASHBOARD)});
   }
 
   goToLoginScreen() {
-    Timer(const Duration(seconds: 3), () => {Get.offAllNamed(Paths.LOGIN)});
+    Timer(const Duration(seconds: 1), () => {Get.offAllNamed(Paths.LOGIN)});
   }
 }

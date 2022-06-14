@@ -18,17 +18,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Flutter Ecommerce Demo',
         theme: ThemeData(
           primaryColor: kPrimaryColor,
           colorScheme: ColorScheme.light().copyWith(
             primary: kPrimaryColor,
           ),
         ),
-        initialRoute: Paths.LOGIN,
+        initialRoute: Paths.SPLASH_SCREEN,
         getPages: Routes().pages
         // initialBinding: SplashScreenBinding(), Either give initialbinding or initial route
-        // home: SplashScreen() //: LoginPage(),
         );
   }
 }

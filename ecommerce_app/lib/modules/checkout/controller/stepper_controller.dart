@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:ecommerce_app/app_pages.dart';
+import 'package:ecommerce_app/firebase/firebase_database.dart';
 import 'package:ecommerce_app/modules/cart/controller/cart_screen_controller.dart';
 import 'package:ecommerce_app/modules/checkout/controller/checkout_controller.dart';
 // import 'package:ecommerce_app/modules/order_history/controller/order_history_controller.dart';
@@ -21,6 +22,7 @@ class StepperController extends GetxController {
   }
 
   void onStepContinued() {
+      FirebaseOrderDatabase().fetchAllOrdersOfUser();
     if (index == 1) {
       if (checkoutController.validateAddressForm()) {
         index < stepLength - 1 ? index += 1 : null;
@@ -29,7 +31,7 @@ class StepperController extends GetxController {
       if (checkoutController.validatePaymentForm()) {
         index < stepLength - 1 ? index += 1 : null;
         getOrderPlacedDialog();
-        saveOrdersToSharedPreferences();
+        saveOrdersToFirebaseDB();
         cartController.productsInCart.refresh;
         Timer(
             //TODO:CHeck routes here
@@ -47,10 +49,12 @@ class StepperController extends GetxController {
     index.value = stepIndex;
   }
 
-  Future<void> saveOrdersToSharedPreferences() async {
-    var ordersList = json.encode(cartController.productsInCart);
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('ordersList', ordersList);
-    print('CONSILE');
+  Future<void> saveOrdersToFirebaseDB() async {
+    print('save order to db');
+    for (var i = 0; i < cartController.productsInCart.length; i++) {
+      FirebaseOrderDatabase()
+          .addPurchasedOrderToDB(kickerOrder: cartController.productsInCart[i]);
+      FirebaseOrderDatabase().fetchAllOrdersOfUser();
+    }
   }
 }

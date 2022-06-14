@@ -20,6 +20,7 @@ class CheckoutScreen extends GetView<CheckoutScreenController> {
   Widget build(BuildContext context) {
     var checkoutItems = cartController.productsInCart;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kPrimaryColor,
       appBar: AppBar(
         leading: getBackButton(context),
@@ -30,10 +31,9 @@ class CheckoutScreen extends GetView<CheckoutScreenController> {
           child: Text(
             'Checkout',
             style: TextStyle(
-                fontFamily: 'Bilbo-Regular',
+                fontFamily: 'Actonia PERSONAL',
                 color: kContrastColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 30),
+                fontSize: 35),
           ),
         ),
         backgroundColor: Colors.white,

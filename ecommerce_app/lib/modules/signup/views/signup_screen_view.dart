@@ -14,6 +14,7 @@ class SignUpScreen extends GetView<SignUpController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: <Widget>[
           Expanded(
@@ -29,10 +30,9 @@ class SignUpScreen extends GetView<SignUpController> {
                           child: Text(
                             'Sign Up',
                             style: TextStyle(
-                                fontFamily: 'Bilbo-Regular',
+                                fontFamily: 'Actonia PERSONAL',
                                 color: kContrastColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30),
+                                fontSize: 35),
                           ),
                         ),
                       ],

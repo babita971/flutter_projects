@@ -34,6 +34,7 @@ class KickerPage extends GetView<KickerScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset : false,
       appBar: AppBar(
         titleSpacing: 0,
         centerTitle: true,

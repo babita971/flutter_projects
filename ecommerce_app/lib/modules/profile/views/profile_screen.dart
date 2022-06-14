@@ -1,39 +1,67 @@
 import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/modules/dashboard/controller/bottom_navigation_controller.dart';
 import 'package:ecommerce_app/modules/dashboard/views/bottom_navigation_bar_view.dart';
+import 'package:ecommerce_app/modules/profile/controller/profile_controller.dart';
 import 'package:ecommerce_app/utils/util_widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:ecommerce_app/utils/firebase_auth.dart';
 
-class ProfileScreen extends StatelessWidget {
-  final User user;
-
-  ProfileScreen({required this.user});
-  final BottomNavigationController controller = Get.find();
+class ProfileScreen extends GetView<ProfileController> {
+  final ProfileController profileController = Get.find();
   @override
   Widget build(BuildContext context) {
+    print(profileController.profileData);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: getBackButton(context),
         titleSpacing: 0,
         centerTitle: true,
-        title: SizedBox(height: 40, child: Image.asset('images/Kicker.png')),
-        backgroundColor: Colors.white,
+        title: const Text(
+          'Profile',
+          style: TextStyle(
+              fontFamily: 'Actonia PERSONAL',
+              color: kContrastColor,
+              fontSize: 35),
+        ),
+        backgroundColor: kPrimaryColor,
         iconTheme: const IconThemeData(color: Color.fromARGB(255, 65, 63, 63)),
       ),
-      body: Center(
-        child: Container(
-          color: kPrimaryColor,
-          child: 
-            Text(
-              'NAME: ${user.displayName}',
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(
+            'Hi, ${profileController.profileData.displayName?.split(' ')[0]}',
+            textAlign: TextAlign.center,
+            // ignore: prefer_const_constructors
+            style: TextStyle(
+                fontFamily: 'Actonia PERSONAL',
+                fontSize: 50,
+                color: kContrastColor),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBarView(),
     );
   }
 }
+
+//  Container(
+//             margin: const EdgeInsets.all(20),
+//             height: Get.height / 3,
+//             padding: const EdgeInsets.all(20),
+//             decoration: BoxDecoration(
+//               // color: kContrastColor,
+//               borderRadius: BorderRadius.circular(20),
+//             ),
+//             child:Text(
+//             'Hi, ${profileController.profileData.displayName}',
+//             textAlign: TextAlign.center,
+//             style: TextStyle(
+//                 fontFamily: 'Actonia PERSONAL',
+//                 fontSize: 50,
+//                 color: kContrastColor),
+//           ),
+//           ),
+ 

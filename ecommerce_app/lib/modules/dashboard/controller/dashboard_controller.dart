@@ -1,4 +1,6 @@
 // ignore_for_file: prefer_const_constructors
+import 'package:ecommerce_app/app_pages.dart';
+import 'package:ecommerce_app/firebase/firebase_auth.dart';
 import 'package:ecommerce_app/modules/dashboard/data/api_result.dart';
 import 'package:ecommerce_app/modules/dashboard/modal/kicker_model.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ class DashboardController extends GetxController
   ApiResult apiResult = ApiResult();
   late TabController categoryTabsController;
   var selectedKickerModal = KickerModel().obs;
+  final FirebaseAuthController firebaseController = Get.find();
 
   final List<Tab> categoryTabs = <Tab>[
     Tab(
@@ -26,7 +29,7 @@ class DashboardController extends GetxController
   ];
 
   @override
-  void onInit() {
+  void onInit() async {
     categoryTabsController =
         TabController(length: categoryTabs.length, vsync: this);
     super.onInit();
@@ -37,4 +40,10 @@ class DashboardController extends GetxController
     categoryTabsController.dispose();
     super.onClose();
   }
+
+  void signOutUser() {
+    firebaseController.signOutUser();
+    Get.offAllNamed(Paths.SPLASH_SCREEN);
+  }
 }
+

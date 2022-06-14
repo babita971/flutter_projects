@@ -14,6 +14,7 @@ class CartScreen extends GetView<CartScreenController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: kPrimaryColor,
       appBar: AppBar(
         leading: getBackButton(context),
@@ -24,10 +25,9 @@ class CartScreen extends GetView<CartScreenController> {
           child: Text(
             'Cart',
             style: TextStyle(
-                fontFamily: 'Bilbo-Regular',
+                fontFamily: 'Actonia PERSONAL',
                 color: kContrastColor,
-                fontWeight: FontWeight.bold,
-                fontSize: 30),
+                fontSize: 35),
           ),
         ),
         backgroundColor: Colors.white,
@@ -63,7 +63,7 @@ class CartScreen extends GetView<CartScreenController> {
                                           //   style: TextStyle(
                                           //       fontWeight: FontWeight.bold,
                                           //       color: kContrastColor,
-                                          //       fontFamily: 'Bilbo-Regular',
+                                          //       fontFamily: 'Actonia PERSONAL',
                                           //       fontSize: 14),
                                           // ),
                                           Text(
