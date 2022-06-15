@@ -65,7 +65,11 @@ class ApiResult {
     return _allKickerModels;
   }
 
-  getAllKickerModalsByIndex(int index) {
-    return _allKickerModels[index];
+  getAllKickerModalsByID(int orderPid) {
+    final index =
+        _allKickerModels.indexWhere((element) => element.kickerPid == orderPid);
+    if (index >= 0) {
+      return _allKickerModels[index];
+    }
   }
 }

@@ -69,16 +69,16 @@ class CheckoutScreenController extends GetxController {
   }
 
   bool validateAddressForm() {
-    // if (addressFormKey.currentState!.validate()) {
+    if (addressFormKey.currentState!.validate()) {
     return true;
-    // }
-    // return false;
+    }
+    return false;
   }
 
   bool validatePaymentForm() {
-    // if (paymentFormKey.currentState!.validate()) {
+    if (paymentFormKey.currentState!.validate()) {
     return true;
-    // }
-    // return false;
+    }
+    return false;
   }
 }

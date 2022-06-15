@@ -9,3 +9,4 @@ class ProfileController extends GetxController {
     super.onInit();
   }
 }
+

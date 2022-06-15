@@ -22,6 +22,7 @@ class SignUpScreen extends GetView<SignUpController> {
               key: signUpController.signUpFormKey,
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -45,9 +46,8 @@ class SignUpScreen extends GetView<SignUpController> {
                         textAlign: TextAlign.left,
                         style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'DM Sans',
-                          color: kSecondaryColor,
+                          fontFamily: 'Source Sans Pro',
+                          color: Colors.grey,
                         ),
                       ),
                     ),
@@ -57,8 +57,10 @@ class SignUpScreen extends GetView<SignUpController> {
                       child: TextFormField(
                         controller: signUpController.nameEditingController,
                         validator: (value) {
-                          if (GetUtils.isNull(
-                              signUpController.nameEditingController.text)) {
+                          if (GetUtils.isNull(signUpController
+                                  .nameEditingController.text) ||
+                              signUpController
+                                  .nameEditingController.text.isEmpty) {
                             return 'Invalid name.';
                           }
                         },

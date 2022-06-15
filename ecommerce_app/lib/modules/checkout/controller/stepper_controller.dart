@@ -22,7 +22,6 @@ class StepperController extends GetxController {
   }
 
   void onStepContinued() {
-      FirebaseOrderDatabase().fetchAllOrdersOfUser();
     if (index == 1) {
       if (checkoutController.validateAddressForm()) {
         index < stepLength - 1 ? index += 1 : null;
@@ -36,8 +35,7 @@ class StepperController extends GetxController {
         Timer(
             //TODO:CHeck routes here
             const Duration(seconds: 2), () {
-          print('ITEM HAS BEEN CHECKED OUT');
-          Get.offAllNamed(Paths.ORDER_HISTORY);
+          Get.offNamed(Paths.DASHBOARD);
         });
       }
     } else {
@@ -50,11 +48,9 @@ class StepperController extends GetxController {
   }
 
   Future<void> saveOrdersToFirebaseDB() async {
-    print('save order to db');
     for (var i = 0; i < cartController.productsInCart.length; i++) {
       FirebaseOrderDatabase()
           .addPurchasedOrderToDB(kickerOrder: cartController.productsInCart[i]);
-      FirebaseOrderDatabase().fetchAllOrdersOfUser();
     }
   }
 }

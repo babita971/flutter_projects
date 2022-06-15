@@ -21,17 +21,19 @@ class FirebaseAuthController extends GetxController {
 
       user = userCredential.user;
       await user!.updateDisplayName(name);
-      // await user.updatePhoneNumber(phone);
       await user.reload();
       user = auth.currentUser;
     } on FirebaseAuthException catch (e) {
+      print(e.code);
       if (e.code == 'weak-password') {
         return 'Please provide a strong password.';
       } else if (e.code == 'email-already-in-use') {
         return 'An account already exists with entered email address.';
       } else if (e.code == 'email-already-in-use') {
         return 'Email already used. Go to login page.';
-      }
+      } else if (e.code == 'network-request-failed') {
+        return 'Network request failed. Please try again.';
+      } 
     } catch (e) {
       print(e);
     }
@@ -77,7 +79,7 @@ class FirebaseAuthController extends GetxController {
 
   signOutUser() async {
     await FirebaseAuth.instance.signOut();
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setBool('isLoggedIn', false);
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isLoggedIn', false);
   }
 }
