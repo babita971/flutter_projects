@@ -1,5 +1,4 @@
 // ignore_for_file: prefer_const_constructors
-import 'dart:convert';
 import 'dart:async';
 import 'package:ecommerce_app/app_pages.dart';
 import 'package:ecommerce_app/firebase/firebase_database.dart';
@@ -8,14 +7,40 @@ import 'package:ecommerce_app/modules/checkout/controller/checkout_controller.da
 // import 'package:ecommerce_app/modules/order_history/controller/order_history_controller.dart';
 import 'package:ecommerce_app/utils/util_widgets.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class StepperController extends GetxController {
   var index = 0.obs;
   var stepLength = 3; //Fixing the sections in checkout page.
   CheckoutScreenController checkoutController = Get.find();
-  // OrderHistoryController orderHistoryController = Get.find();
   CartScreenController cartController = Get.find();
+
+  void onInit() async {
+    var addressInfo = await FirebaseOrderDatabase().fetchUserSavedAddress();
+    if (!addressInfo.isEmpty) {
+      checkoutController.address1Controller.text =
+          addressInfo['address1ControllerText'] ?? '';
+      checkoutController.address2Controller.text =
+          addressInfo['address2ControllerText'] ?? '';
+      checkoutController.cityController.text =
+          addressInfo['cityControllerText'] ?? '';
+      checkoutController.countryController.text =
+          addressInfo['countryControllerText'] ?? '';
+      checkoutController.zipController.text =
+          addressInfo['zipControllerText'] ?? '';
+    }
+    
+    var cardInfo = await FirebaseOrderDatabase().fetchUserCardInfo();
+    if (!cardInfo.isEmpty) {
+      checkoutController.cardNameController.text =
+          cardInfo['cardName'] ?? '';
+      checkoutController.cardNumController.text =
+          cardInfo['cardNumber'] ?? '';
+      checkoutController.expDateController.text =
+          cardInfo['expirationDate'] ?? '';
+      checkoutController.cvvController.text =
+          cardInfo['cvv'] ?? '';
+    }
+  }
 
   void onStepCancelled() {
     index > 0 ? index -= 1 : null;
@@ -24,18 +49,28 @@ class StepperController extends GetxController {
   void onStepContinued() {
     if (index == 1) {
       if (checkoutController.validateAddressForm()) {
+        FirebaseOrderDatabase().saveUserAddressToDatabase(
+            addressFirstLine: checkoutController.address1Controller.text,
+            addressSecondLine: checkoutController.address2Controller.text,
+            city: checkoutController.cityController.text,
+            country: checkoutController.countryController.text,
+            zip: checkoutController.zipController.text);
         index < stepLength - 1 ? index += 1 : null;
       }
     } else if (index == 2) {
       if (checkoutController.validatePaymentForm()) {
+        FirebaseOrderDatabase().saveUserCardInfoToDatabase(
+          cardName: checkoutController.cardNameController.text,
+          cardNumber: checkoutController.cardNumController.text,
+          expirationDate: checkoutController.expDateController.text,
+          cvv: checkoutController.cvvController.text,
+        );
         index < stepLength - 1 ? index += 1 : null;
         getOrderPlacedDialog();
         saveOrdersToFirebaseDB();
         cartController.productsInCart.refresh;
-        Timer(
-            //TODO:CHeck routes here
-            const Duration(seconds: 2), () {
-          Get.offNamed(Paths.DASHBOARD);
+        Timer(const Duration(seconds: 3), () {
+          Get.offAllNamed(Paths.DASHBOARD);
         });
       }
     } else {

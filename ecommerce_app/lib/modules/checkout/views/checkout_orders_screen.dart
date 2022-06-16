@@ -32,17 +32,17 @@ class TotalOrderScreen extends GetView<CheckoutScreenController> {
                       fontFamily: 'DM Sans'),
                 ),
               ),
-              // IconButton(
-              //   onPressed: () {
-              //     checkoutController.deleteAllItemsFromCart();
-              //     //TODO: add all delete button and redirect to dashboard.
-              //   },
-              //   icon: Icon(
-              //     Icons.delete,
-              //     size: 20,
-              //     color: Colors.black,
-              //   ),
-              // ),
+              IconButton(
+                onPressed: () {
+                  checkoutController.deleteAllItemsFromCart();
+                  //TODO: add all delete button and redirect to dashboard.
+                },
+                icon: Icon(
+                  Icons.delete,
+                  size: 20,
+                  color: Colors.black,
+                ),
+              ),
             ],
           ),
           Divider(

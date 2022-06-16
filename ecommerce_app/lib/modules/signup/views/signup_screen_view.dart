@@ -242,24 +242,25 @@ class SignUpScreen extends GetView<SignUpController> {
                           ],
                         ),
                         onPressed: () {
-                          Get.snackbar(
-                            "Google Login",
-                            "Implementation Pending!",
-                            icon: ImageIcon(
-                              AssetImage('images/Google.png'),
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.redAccent,
-                            borderRadius: 20,
-                            margin: EdgeInsets.all(15),
-                            colorText: Colors.white,
-                            duration: Duration(seconds: 3),
-                            isDismissible: true,
-                            dismissDirection: DismissDirection.horizontal,
-                            forwardAnimationCurve: Curves.easeOutBack,
-                          );
+                          // Get.snackbar(
+                          //   "Google Login",
+                          //   "Implementation Pending!",
+                          //   icon: ImageIcon(
+                          //     AssetImage('images/Google.png'),
+                          //     color: Colors.white,
+                          //     size: 24,
+                          //   ),
+                          //   snackPosition: SnackPosition.BOTTOM,
+                          //   backgroundColor: Colors.redAccent,
+                          //   borderRadius: 20,
+                          //   margin: EdgeInsets.all(15),
+                          //   colorText: Colors.white,
+                          //   duration: Duration(seconds: 3),
+                          //   isDismissible: true,
+                          //   dismissDirection: DismissDirection.horizontal,
+                          //   forwardAnimationCurve: Curves.easeOutBack,
+                          // );
+                          signUpController.googleSignUpFromFirebase();
                         },
                         shape: const RoundedRectangleBorder(
                             borderRadius:

@@ -6,7 +6,6 @@ import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/firebase/firebase_database.dart';
 import 'package:ecommerce_app/modules/dashboard/data/api_result.dart';
 import 'package:ecommerce_app/modules/dashboard/modal/kicker_model.dart';
-import 'package:ecommerce_app/modules/dashboard/views/bottom_navigation_bar_view.dart';
 import 'package:ecommerce_app/modules/kicker_page/controller/kicker_screen_controller.dart';
 import 'package:ecommerce_app/modules/order_history/controller/order_history_controller.dart';
 import 'package:ecommerce_app/utils/util_widgets.dart';
@@ -59,8 +58,6 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
                 return GestureDetector(
                   onTap: () {
                     kickerScreenController.selectedKickerModal.value = order;
-                    kickerScreenController
-                        .selectedKickerModal.value.isAddedToCart = false;
                     Get.toNamed(Paths.PRODUCT_PAGE);
                   },
                   child: Card(

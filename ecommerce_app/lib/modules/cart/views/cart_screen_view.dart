@@ -179,7 +179,6 @@ class CartScreen extends GetView<CartScreenController> {
                             fontWeight: FontWeight.bold),
                       ),
                       onPressed: () {
-                        //TODO, check if items are there , then only show button
                         Get.toNamed(Paths.CHECKOUT);
                       },
                       shape: const RoundedRectangleBorder(

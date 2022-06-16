@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 class CheckoutBinding extends Bindings {
   @override
   void dependencies() {
-    // TODO: implement dependencies
     Get.lazyPut<CheckoutScreenController>(() => CheckoutScreenController());
     Get.lazyPut<StepperController>(() => StepperController());
   }

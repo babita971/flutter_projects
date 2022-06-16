@@ -52,7 +52,10 @@ class CheckoutAddressScreen extends GetView<CheckoutScreenController> {
                           checkoutController.countryController.text =
                               value.toString();
                         }),
-                        initialSelection: '+91'),
+                        initialSelection:
+                            checkoutController.countryController.text.isEmpty
+                                ? '93'
+                                : checkoutController.countryController.text),
                   ),
                   Expanded(
                     child: TextFormField(
@@ -85,17 +88,18 @@ class CheckoutAddressScreen extends GetView<CheckoutScreenController> {
                 decoration: const InputDecoration(
                     hintText: 'City', hintStyle: kCheckoutFormStyle),
               ),
-              TextFormField(
-                controller: checkoutController.countryController,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Country cannot be empty.';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                    hintText: 'Country', hintStyle: kCheckoutFormStyle),
-              ),
+              // TextFormField(
+              //   controller: checkoutController.countryController,
+              //   validator: (value) {
+              //     if (value == null || value.isEmpty) {
+              //       return 'Country cannot be empty.';
+              //     }
+              //     return null;
+              //   },
+              //   decoration: const InputDecoration(
+              //       hintText: 'Country', hintStyle: kCheckoutFormStyle),
+              // ),
+
               TextFormField(
                 controller: checkoutController.zipController,
                 validator: (value) {

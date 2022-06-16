@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:ecommerce_app/app_pages.dart';
 import 'package:ecommerce_app/modules/cart/controller/cart_screen_controller.dart';
-import 'package:ecommerce_app/modules/dashboard/modal/kicker_model.dart';
 import 'package:ecommerce_app/modules/kicker_page/controller/kicker_screen_controller.dart';
 import 'package:ecommerce_app/utils/util_widgets.dart';
 import 'package:flutter/cupertino.dart';
@@ -37,10 +36,7 @@ class CheckoutScreenController extends GetxController {
 
   CartScreenController cartController = Get.find();
   KickerScreenController kickerScreenController = Get.find();
-
-// on init calculate total orders
-// fetch orders from cart and calculate total price
-// fetch addresses if user has stored any
+  
   @override
   void onInit() {
     super.onInit();

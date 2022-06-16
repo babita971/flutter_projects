@@ -20,7 +20,7 @@ class CheckoutScreen extends GetView<CheckoutScreenController> {
   Widget build(BuildContext context) {
     var checkoutItems = cartController.productsInCart;
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       backgroundColor: kPrimaryColor,
       appBar: AppBar(
         leading: getBackButton(context),

@@ -2,7 +2,6 @@ import 'package:ecommerce_app/modules/profile/binding/profile_binding.dart';
 import 'package:ecommerce_app/modules/profile/views/profile_screen.dart';
 import 'package:ecommerce_app/modules/signup/binding/signup_binding.dart';
 import 'package:ecommerce_app/modules/signup/views/signup_screen_view.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import 'modules/dashboard/binding/dashboard_binding.dart';
