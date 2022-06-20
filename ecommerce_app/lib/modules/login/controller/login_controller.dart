@@ -53,7 +53,7 @@ class LoginController extends GetxController {
         user ?? 'Invalid credentials',
         colorText: Colors.white,
         backgroundColor: kContrastColor,
-        duration: Duration(seconds: 1),
+        duration: const Duration(seconds: 1),
       );
     }
   }
@@ -62,16 +62,15 @@ class LoginController extends GetxController {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      print(FirebaseAuth.instance.currentUser);
+      print('${FirebaseAuth.instance.currentUser}');
       Get.offAllNamed(Paths.DASHBOARD);
     }
 
     return firebaseApp;
   }
-  
-  googleSignInFromFirebase() async{
-     var user = await firebaseAuthController.signInWithGoogle(
-    );
+
+  googleSignInFromFirebase() async {
+    var user = await firebaseAuthController.signInWithGoogle();
     if (user.runtimeType == User && user != null) {
       Get.offAllNamed(Paths.DASHBOARD);
       final prefs = await SharedPreferences.getInstance();
@@ -83,7 +82,25 @@ class LoginController extends GetxController {
         user ?? 'Inconsistent data',
         colorText: Colors.white,
         backgroundColor: kContrastColor,
-        duration: Duration(seconds: 1),
+        duration: const Duration(seconds: 1),
+      );
+    }
+  }
+
+  facebookSignInFromFirebase() async {
+    var user = await firebaseAuthController.signInWithFacebook();
+    if (user.runtimeType == User && user != null) {
+      Get.offAllNamed(Paths.DASHBOARD);
+      final prefs = await SharedPreferences.getInstance();
+      prefs.setBool('isLoggedIn', true);
+      FirebaseOrderDatabase.userUid = FirebaseAuth.instance.currentUser?.uid;
+    } else {
+      Get.snackbar(
+        'Facebook authentication failed!',
+        user ?? 'Inconsistent data',
+        colorText: Colors.white,
+        backgroundColor: kContrastColor,
+        duration: const Duration(seconds: 1),
       );
     }
   }

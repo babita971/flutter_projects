@@ -27,7 +27,6 @@ class FirebaseAuthController extends GetxController {
       await user.reload();
       user = auth.currentUser;
     } on FirebaseAuthException catch (e) {
-      print(e.code);
       if (e.code == 'weak-password') {
         return 'Please provide a strong password.';
       } else if (e.code == 'email-already-in-use') {
@@ -36,7 +35,7 @@ class FirebaseAuthController extends GetxController {
         return 'Email already used. Go to login page.';
       } else if (e.code == 'network-request-failed') {
         return 'Network request failed. Please try again.';
-      } 
+      }
     } catch (e) {
       print(e);
     }
@@ -84,9 +83,10 @@ class FirebaseAuthController extends GetxController {
     await FirebaseAuth.instance.signOut();
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool('isLoggedIn', false);
+    await FacebookAuth.instance.logOut();
   }
 
-   Future<dynamic?> signInWithGoogle() async {
+  Future<dynamic?> signInWithGoogle() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
 
@@ -109,43 +109,42 @@ class FirebaseAuthController extends GetxController {
             await auth.signInWithCredential(credential);
 
         user = userCredential.user;
+        return user;
       } on FirebaseAuthException catch (e) {
         if (e.code == 'account-exists-with-different-credential') {
           return 'Account exists with different account';
-        }
-        else if (e.code == 'invalid-credential') {
+        } else if (e.code == 'invalid-credential') {
           return 'Invalid credentials';
         }
       } catch (e) {
-         return 'Some error occurred. Please try again.';
+        return 'Some error occurred. Please try again.';
       }
     }
-
-    return user;
   }
 
   Future<dynamic> signInWithFacebook() async {
     FirebaseAuth auth = FirebaseAuth.instance;
     User? user;
-  final LoginResult loginResult = await FacebookAuth.instance.login();
-  final OAuthCredential facebookAuthCredential = FacebookAuthProvider.credential(loginResult.accessToken.token);
+    final LoginResult loginResult = await FacebookAuth.instance.login(permissions: [
+      'email', 'public_profile'
+    ]);
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
 
-   try {
-        final UserCredential userCredential =
-            await auth.signInWithCredential(facebookAuthCredential);
+    try {
+      final UserCredential userCredential =
+          await auth.signInWithCredential(facebookAuthCredential);
 
-        user = userCredential.user;
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'account-exists-with-different-credential') {
-          return 'Account exists with different account';
-        }
-        else if (e.code == 'invalid-credential') {
-          return 'Invalid credentials';
-        }
-      } catch (e) {
-         return 'Some error occurred. Please try again.';
+      user = userCredential.user;
+      return user;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'account-exists-with-different-credential') {
+        return 'Account exists with different account';
+      } else if (e.code == 'invalid-credential') {
+        return 'Invalid credentials';
       }
+    } catch (e) {
+      return 'Some error occurred. Please try again.';
     }
+  }
 }
-}
-

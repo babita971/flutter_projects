@@ -48,7 +48,7 @@ class DashBoard extends GetView<DashboardController> {
                   child: Text(
                     kickerModal.kickerName,
                     // textAlign: TextAlign.start,
-                    style: TextStyle(fontSize: 16.0, fontFamily: 'DM Sans'),
+                    style: kFontSize16DM,
                   ),
                 ),
                 Expanded(
@@ -161,7 +161,6 @@ class DashBoard extends GetView<DashboardController> {
               title: const Text('Sign out'),
               onTap: () {
                 dashboardController.signOutUser();
-                // TODO: Add this in profile screen and Clear all stored information and sign out.Also create sign up page.
               },
             ),
           ],

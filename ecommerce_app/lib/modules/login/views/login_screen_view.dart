@@ -124,12 +124,7 @@ class LoginScreen extends GetView<LoginController> {
                                       Padding(
                                         padding:
                                             const EdgeInsets.only(left: 8.0),
-                                        child:
-                                            //  ImageIcon(
-                                            //   AssetImage('images/facebook.png'),
-                                            //   size: 24,
-                                            // ),
-                                            SvgPicture.asset(
+                                        child: SvgPicture.asset(
                                           'images/facebook_svg.svg',
                                           width: 20.0,
                                           height: 20.0,
@@ -150,25 +145,27 @@ class LoginScreen extends GetView<LoginController> {
                                     ],
                                   ),
                                   onPressed: () {
-                                    Get.snackbar(
-                                      "Facebook Login",
-                                      "Implementation Pending!",
-                                      icon: ImageIcon(
-                                        AssetImage('images/facebook.png'),
-                                        color: Colors.white,
-                                        size: 24,
-                                      ),
-                                      snackPosition: SnackPosition.BOTTOM,
-                                      backgroundColor: Colors.blue,
-                                      borderRadius: 20,
-                                      margin: EdgeInsets.all(15),
-                                      colorText: Colors.white,
-                                      duration: Duration(seconds: 3),
-                                      isDismissible: true,
-                                      dismissDirection:
-                                          DismissDirection.horizontal,
-                                      forwardAnimationCurve: Curves.easeOutBack,
-                                    );
+                                    // Get.snackbar(
+                                    //   "Facebook Login",
+                                    //   "Implementation Pending!",
+                                    //   icon: ImageIcon(
+                                    //     AssetImage('images/facebook.png'),
+                                    //     color: Colors.white,
+                                    //     size: 24,
+                                    //   ),
+                                    //   snackPosition: SnackPosition.BOTTOM,
+                                    //   backgroundColor: Colors.blue,
+                                    //   borderRadius: 20,
+                                    //   margin: EdgeInsets.all(15),
+                                    //   colorText: Colors.white,
+                                    //   duration: Duration(seconds: 3),
+                                    //   isDismissible: true,
+                                    //   dismissDirection:
+                                    //       DismissDirection.horizontal,
+                                    //   forwardAnimationCurve: Curves.easeOutBack,
+                                    // );
+                                    loginController
+                                        .facebookSignInFromFirebase();
                                   },
                                   shape: const RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(

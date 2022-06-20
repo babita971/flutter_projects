@@ -16,29 +16,24 @@ class StepperController extends GetxController {
 
   void onInit() async {
     var addressInfo = await FirebaseOrderDatabase().fetchUserSavedAddress();
-    if (!addressInfo.isEmpty) {
+    if (!(addressInfo?.isEmpty ?? true)) {
       checkoutController.address1Controller.text =
-          addressInfo['address1ControllerText'] ?? '';
+          addressInfo['addressFirstLine'] ?? '';
       checkoutController.address2Controller.text =
-          addressInfo['address2ControllerText'] ?? '';
-      checkoutController.cityController.text =
-          addressInfo['cityControllerText'] ?? '';
-      checkoutController.countryController.text =
-          addressInfo['countryControllerText'] ?? '';
-      checkoutController.zipController.text =
-          addressInfo['zipControllerText'] ?? '';
+          addressInfo['addressSecondLine'] ?? '';
+      checkoutController.cityController.text = addressInfo['city'] ?? '';
+      checkoutController.countryController.text = addressInfo['country'] ?? '';
+      checkoutController.zipController.text = addressInfo['zip'] ?? '';
+      checkoutController.phoneController.text = addressInfo['phone'] ?? '';
     }
-    
+
     var cardInfo = await FirebaseOrderDatabase().fetchUserCardInfo();
-    if (!cardInfo.isEmpty) {
-      checkoutController.cardNameController.text =
-          cardInfo['cardName'] ?? '';
-      checkoutController.cardNumController.text =
-          cardInfo['cardNumber'] ?? '';
+    if (!(cardInfo?.isEmpty ?? true)) {
+      checkoutController.cardNameController.text = cardInfo['cardName'] ?? '';
+      checkoutController.cardNumController.text = cardInfo['cardNumber'] ?? '';
       checkoutController.expDateController.text =
           cardInfo['expirationDate'] ?? '';
-      checkoutController.cvvController.text =
-          cardInfo['cvv'] ?? '';
+      checkoutController.cvvController.text = cardInfo['cvv'] ?? '';
     }
   }
 
@@ -54,7 +49,8 @@ class StepperController extends GetxController {
             addressSecondLine: checkoutController.address2Controller.text,
             city: checkoutController.cityController.text,
             country: checkoutController.countryController.text,
-            zip: checkoutController.zipController.text);
+            zip: checkoutController.zipController.text,
+            phone: checkoutController.phoneController.text);
         index < stepLength - 1 ? index += 1 : null;
       }
     } else if (index == 2) {

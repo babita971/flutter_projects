@@ -35,15 +35,8 @@ class DashboardController extends GetxController
     super.onInit();
   }
 
-  @override
-  void onClose() {
-    categoryTabsController.dispose();
-    super.onClose();
-  }
-
   void signOutUser() {
     firebaseController.signOutUser();
     Get.offAllNamed(Paths.SPLASH_SCREEN);
   }
 }
-

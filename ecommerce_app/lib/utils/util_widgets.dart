@@ -68,7 +68,6 @@ getAllOrdersDeletedDialog() {
 }
 
 class ExpirationFormField extends StatefulWidget {
-  //TODO make controller optional
   ExpirationFormField({
     required this.controller,
     required this.decoration,

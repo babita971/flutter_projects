@@ -3,6 +3,7 @@
 
 import 'package:ecommerce_app/app_pages.dart';
 import 'package:ecommerce_app/constants/constants.dart';
+import 'package:ecommerce_app/modules/login/controller/login_controller.dart';
 import 'package:ecommerce_app/modules/signup/controller/signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +11,7 @@ import 'package:get/get.dart';
 
 class SignUpScreen extends GetView<SignUpController> {
   final SignUpController signUpController = Get.find();
+  final LoginController loginController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -63,6 +65,7 @@ class SignUpScreen extends GetView<SignUpController> {
                                   .nameEditingController.text.isEmpty) {
                             return 'Invalid name.';
                           }
+                          return null;
                         },
                         decoration: const InputDecoration(
                           prefixIcon: Icon(
@@ -111,6 +114,7 @@ class SignUpScreen extends GetView<SignUpController> {
                               signUpController.emailEditingController.text)) {
                             return 'Invalid email address.';
                           }
+                          return null;
                         },
                         decoration: const InputDecoration(
                           prefixIcon: ImageIcon(
@@ -141,6 +145,7 @@ class SignUpScreen extends GetView<SignUpController> {
                               8) {
                             return 'Password should be atleast 8 characters long.';
                           }
+                          return null;
                         },
                         decoration: const InputDecoration(
                           prefixIcon: ImageIcon(
@@ -187,24 +192,25 @@ class SignUpScreen extends GetView<SignUpController> {
                           ],
                         ),
                         onPressed: () {
-                          Get.snackbar(
-                            "Facebook Login",
-                            "Implementation Pending!",
-                            icon: ImageIcon(
-                              AssetImage('images/facebook.png'),
-                              color: Colors.white,
-                              size: 24,
-                            ),
-                            snackPosition: SnackPosition.BOTTOM,
-                            backgroundColor: Colors.blue,
-                            borderRadius: 20,
-                            margin: EdgeInsets.all(15),
-                            colorText: Colors.white,
-                            duration: Duration(seconds: 3),
-                            isDismissible: true,
-                            dismissDirection: DismissDirection.horizontal,
-                            forwardAnimationCurve: Curves.easeOutBack,
-                          );
+                          // Get.snackbar(
+                          //   "Facebook Login",
+                          //   "Implementation Pending!",
+                          //   icon: ImageIcon(
+                          //     AssetImage('images/facebook.png'),
+                          //     color: Colors.white,
+                          //     size: 24,
+                          //   ),
+                          //   snackPosition: SnackPosition.BOTTOM,
+                          //   backgroundColor: Colors.blue,
+                          //   borderRadius: 20,
+                          //   margin: EdgeInsets.all(15),
+                          //   colorText: Colors.white,
+                          //   duration: Duration(seconds: 3),
+                          //   isDismissible: true,
+                          //   dismissDirection: DismissDirection.horizontal,
+                          //   forwardAnimationCurve: Curves.easeOutBack,
+                          // );
+                          loginController.facebookSignInFromFirebase();
                         },
                         shape: const RoundedRectangleBorder(
                             borderRadius:
@@ -260,7 +266,7 @@ class SignUpScreen extends GetView<SignUpController> {
                           //   dismissDirection: DismissDirection.horizontal,
                           //   forwardAnimationCurve: Curves.easeOutBack,
                           // );
-                          signUpController.googleSignUpFromFirebase();
+                          loginController.googleSignInFromFirebase();
                         },
                         shape: const RoundedRectangleBorder(
                             borderRadius:

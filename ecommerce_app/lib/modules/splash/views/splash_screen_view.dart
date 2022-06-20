@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/modules/splash/controller/splash_screen_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ class SplashScreen extends GetView<SplashController> {
                 Text(
                   'World\'s biggest collection of kicks.',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.grey, fontSize: 16),
+                  style: kSplashScreenTextStyle,
                 ),
               ],
             ),

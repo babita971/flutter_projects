@@ -15,7 +15,7 @@ class BottomNavigationBarView extends GetView<BottomNavigationController> {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(30), topLeft: Radius.circular(30)),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(color: Colors.black38, spreadRadius: 0, blurRadius: 5),
         ],
       ),

@@ -36,7 +36,7 @@ class CheckoutScreenController extends GetxController {
 
   CartScreenController cartController = Get.find();
   KickerScreenController kickerScreenController = Get.find();
-  
+
   @override
   void onInit() {
     super.onInit();
@@ -61,19 +61,19 @@ class CheckoutScreenController extends GetxController {
     cartController.productsInCart.clear();
     cartController.productsInCart.refresh;
     getAllOrdersDeletedDialog();
-    Timer(const Duration(seconds: 2), () => {Get.offNamed(Paths.DASHBOARD)});
+    Timer(const Duration(seconds: 1), () => {Get.offAllNamed(Paths.DASHBOARD)});
   }
 
   bool validateAddressForm() {
     if (addressFormKey.currentState!.validate()) {
-    return true;
+      return true;
     }
     return false;
   }
 
   bool validatePaymentForm() {
     if (paymentFormKey.currentState!.validate()) {
-    return true;
+      return true;
     }
     return false;
   }

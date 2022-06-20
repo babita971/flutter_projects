@@ -22,7 +22,7 @@ class WishlistScreen extends StatelessWidget {
       body: Center(
         child: Container(
           color: kPrimaryColor,
-          child: Text('Wishlist Page'),
+          child: const Text('Wishlist Page'),
         ),
       ),
       bottomNavigationBar: BottomNavigationBarView(),

@@ -42,7 +42,8 @@ class FirebaseOrderDatabase {
       required String addressSecondLine,
       required String city,
       required String zip,
-      required String country}) async {
+      required String country,
+      required String phone}) async {
     userUid = userUid ?? FirebaseAuth.instance.currentUser?.uid;
 
     DocumentReference documentReferencer = _addressCollection.doc(userUid);
@@ -53,9 +54,9 @@ class FirebaseOrderDatabase {
       "city": city,
       "zip": zip,
       "country": country,
+      "phone": phone,
       "updateTime": DateTime.now()
     };
-    print('save address');
 
     await documentReferencer
         .set(data)
@@ -64,13 +65,14 @@ class FirebaseOrderDatabase {
   }
 
   fetchUserSavedAddress() async {
+    userUid = userUid ?? FirebaseAuth.instance.currentUser?.uid;
     DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
         .collection('user_address')
         .doc(userUid)
         .get();
     var data = documentSnapshot.data() != null
         ? documentSnapshot.data() as Map<String, dynamic>
-        : {};
+        : null;
     return data;
   }
 
@@ -80,7 +82,6 @@ class FirebaseOrderDatabase {
       required String expirationDate,
       required String cvv}) async {
     userUid = userUid ?? FirebaseAuth.instance.currentUser?.uid;
-    print('save card');
     DocumentReference documentReferencer = _paymentCollection.doc(userUid);
 
     Map<String, dynamic> data = <String, dynamic>{
@@ -98,13 +99,14 @@ class FirebaseOrderDatabase {
   }
 
   fetchUserCardInfo() async {
+    userUid = userUid ?? FirebaseAuth.instance.currentUser?.uid;
     DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
         .collection('user_card_info')
         .doc(userUid)
         .get();
     var data = documentSnapshot.data() != null
         ? documentSnapshot.data() as Map<String, dynamic>
-        : {};
+        : null;
     return data;
   }
 }

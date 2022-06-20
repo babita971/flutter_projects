@@ -1,5 +1,4 @@
 import 'package:ecommerce_app/constants/constants.dart';
-import 'package:ecommerce_app/modules/dashboard/controller/bottom_navigation_controller.dart';
 import 'package:ecommerce_app/modules/dashboard/views/bottom_navigation_bar_view.dart';
 import 'package:ecommerce_app/modules/profile/controller/profile_controller.dart';
 import 'package:ecommerce_app/utils/util_widgets.dart';
@@ -10,7 +9,7 @@ class ProfileScreen extends GetView<ProfileController> {
   final ProfileController profileController = Get.find();
   @override
   Widget build(BuildContext context) {
-    print(profileController.profileData);
+    // print(profileController.profileData);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -19,10 +18,7 @@ class ProfileScreen extends GetView<ProfileController> {
         centerTitle: true,
         title: const Text(
           'Profile',
-          style: TextStyle(
-              fontFamily: 'Actonia PERSONAL',
-              color: kContrastColor,
-              fontSize: 35),
+          style: kAppBarTextStyle,
         ),
         backgroundColor: kPrimaryColor,
         iconTheme: const IconThemeData(color: Color.fromARGB(255, 65, 63, 63)),
@@ -35,10 +31,7 @@ class ProfileScreen extends GetView<ProfileController> {
             'Hi, ${profileController.profileData.displayName?.split(' ')[0]}',
             textAlign: TextAlign.center,
             // ignore: prefer_const_constructors
-            style: TextStyle(
-                fontFamily: 'Actonia PERSONAL',
-                fontSize: 50,
-                color: kContrastColor),
+            style: kBigActoniaTextStyle
           ),
         ],
       ),
@@ -58,10 +51,6 @@ class ProfileScreen extends GetView<ProfileController> {
 //             child:Text(
 //             'Hi, ${profileController.profileData.displayName}',
 //             textAlign: TextAlign.center,
-//             style: TextStyle(
-//                 fontFamily: 'Actonia PERSONAL',
-//                 fontSize: 50,
-//                 color: kContrastColor),
-//           ),
+//             style:
 //           ),
  

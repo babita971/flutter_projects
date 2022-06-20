@@ -21,7 +21,7 @@ class NotificationScreen extends StatelessWidget {
       body: Center(
         child: Container(
           color: kPrimaryColor,
-          child: Text('Notification Page'),
+          child: const Text('Notification Page'),
         ),
       ),
       bottomNavigationBar: BottomNavigationBarView(),

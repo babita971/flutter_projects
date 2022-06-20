@@ -26,10 +26,7 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
         centerTitle: true,
         title: const Text(
           'Order History',
-          style: TextStyle(
-              fontFamily: 'Actonia PERSONAL',
-              color: kContrastColor,
-              fontSize: 35),
+          style: kAppBarTextStyle
         ),
         backgroundColor: kPrimaryColor,
         iconTheme: const IconThemeData(color: Color.fromARGB(255, 65, 63, 63)),
@@ -41,23 +38,25 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
           if (snapshot.hasError) {
             return Text('Something went wrong');
           } else if (snapshot.hasData || snapshot.data != null) {
+            orderHistoryController.hasOrders == true;
             // print('data is there ${snapshot.data!.docs.length}');
             return ListView.separated(
               shrinkWrap: true,
               separatorBuilder: (context, index) => SizedBox(height: 16.0),
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
-                Map<String, dynamic> orderInfo =
-                    snapshot.data!.docs[index].data()! as Map<String, dynamic>;
-                KickerModel order =
-                    ApiResult().getAllKickerModalsByID(orderInfo["kickerPid"]);
-                var orderDate =
-                    DateTime.parse(orderInfo["orderTime"].toDate().toString())
-                        .toString()
-                        .split(' ')[0];
+                Map<String, dynamic> orderInfo = snapshot.data!.docs[index]
+                    .data()! as Map<String, dynamic>;
+                KickerModel order = ApiResult()
+                    .getAllKickerModalsByID(orderInfo["kickerPid"]);
+                var orderDate = DateTime.parse(
+                        orderInfo["orderTime"].toDate().toString())
+                    .toString()
+                    .split(' ')[0];
                 return GestureDetector(
                   onTap: () {
-                    kickerScreenController.selectedKickerModal.value = order;
+                    kickerScreenController.selectedKickerModal.value =
+                        order;
                     Get.toNamed(Paths.PRODUCT_PAGE);
                   },
                   child: Card(
@@ -67,7 +66,8 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
                         Container(
                           height: Get.height / 8,
                           width: Get.width / 3,
-                          child: Image(image: AssetImage(order.kickerImage)),
+                          child:
+                              Image(image: AssetImage(order.kickerImage)),
                         ),
                         Expanded(
                           child: Padding(
@@ -102,8 +102,8 @@ class OrderHistoryScreen extends GetView<OrderHistoryController> {
               },
             );
           }
-
-          return Center(
+          return Align(
+            alignment: Alignment.center,
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(kContrastColor),
             ),

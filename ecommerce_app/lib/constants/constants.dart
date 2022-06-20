@@ -64,3 +64,23 @@ const kCheckoutFormStyle =
     TextStyle(fontSize: 14, fontFamily: 'DM Sans', color: Color(0xFF979797));
 
 const kCheckoutPayStyle = TextStyle(fontSize: 14, fontFamily: 'DM Sans');
+
+const kAppBarTextStyle = TextStyle(
+    fontFamily: 'Actonia PERSONAL', color: kContrastColor, fontSize: 35);
+
+const kBlackDMSansText =
+    TextStyle(fontFamily: 'DM Sans', color: Colors.black, fontSize: 14.0);
+const kWhiteDMSansText = TextStyle(
+    color: Colors.white, fontFamily: 'DM Sans', fontWeight: FontWeight.bold);
+
+const ksecondaryDMSansText =
+    TextStyle(color: kSecondaryColor, fontSize: 14, fontFamily: 'DM Sans');
+
+const kFontSize16DM = TextStyle(fontSize: 14, fontFamily: 'DM Sans');
+
+const kBigActoniaTextStyle = TextStyle(
+    fontFamily: 'Actonia PERSONAL', fontSize: 50, color: kContrastColor);
+
+const kSplashScreenTextStyle = TextStyle(color: Colors.grey, fontSize: 16);
+
+const kFontSize14DM = TextStyle(fontSize: 14.0, fontFamily: 'DM Sans');

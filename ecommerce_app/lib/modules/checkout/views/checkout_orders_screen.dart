@@ -26,16 +26,12 @@ class TotalOrderScreen extends GetView<CheckoutScreenController> {
               Expanded(
                 child: Text(
                   '${cartController.productsInCart.length.toString()} items(s)',
-                  style: TextStyle(
-                      color: kSecondaryColor,
-                      fontSize: 14,
-                      fontFamily: 'DM Sans'),
+                  style: ksecondaryDMSansText
                 ),
               ),
               IconButton(
                 onPressed: () {
                   checkoutController.deleteAllItemsFromCart();
-                  //TODO: add all delete button and redirect to dashboard.
                 },
                 icon: Icon(
                   Icons.delete,

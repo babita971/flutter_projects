@@ -56,23 +56,4 @@ class SignUpController extends GetxController {
       );
     }
   }
-
-  ub() async{
-     var user = await firebaseAuthController.signInWithGoogle(
-    );
-    if (user.runtimeType == User && user != null) {
-      Get.offAllNamed(Paths.DASHBOARD);
-      final prefs = await SharedPreferences.getInstance();
-      prefs.setBool('isLoggedIn', true);
-      FirebaseOrderDatabase.userUid = FirebaseAuth.instance.currentUser?.uid;
-    } else {
-      Get.snackbar(
-        'Google authentication failed!',
-        user ?? 'Inconsistent data',
-        colorText: Colors.white,
-        backgroundColor: kContrastColor,
-        duration: Duration(seconds: 1),
-      );
-    }
-  }
 }

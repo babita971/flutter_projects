@@ -24,10 +24,7 @@ class CartScreen extends GetView<CartScreenController> {
           height: 40,
           child: Text(
             'Cart',
-            style: TextStyle(
-                fontFamily: 'Actonia PERSONAL',
-                color: kContrastColor,
-                fontSize: 35),
+            style: kAppBarTextStyle,
           ),
         ),
         backgroundColor: Colors.white,
@@ -58,20 +55,10 @@ class CartScreen extends GetView<CartScreenController> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         children: [
-                                          // Text(
-                                          //   'Kicker',
-                                          //   style: TextStyle(
-                                          //       fontWeight: FontWeight.bold,
-                                          //       color: kContrastColor,
-                                          //       fontFamily: 'Actonia PERSONAL',
-                                          //       fontSize: 14),
-                                          // ),
                                           Text(
                                             cartController.productsInCart[index]
                                                 .kickerName,
-                                            style: TextStyle(
-                                                // fontWeight: FontWeight.bold,
-                                                fontSize: 14),
+                                            style: kFontSize14DM,
                                           ),
                                           Text(
                                             '\$${cartController.productsInCart[index].kickerPrice}',
@@ -83,7 +70,7 @@ class CartScreen extends GetView<CartScreenController> {
                                     Expanded(
                                       child: Text(
                                         'Total: \$${(cartController.productsInCart[index].kickerPrice * cartController.productsInCart[index].kickerQuantity).toStringAsFixed(2)}',
-                                        style: TextStyle(fontSize: 14),
+                                        style: kFontSize14DM,
                                       ),
                                     ),
                                     Expanded(
@@ -93,16 +80,13 @@ class CartScreen extends GetView<CartScreenController> {
                                         children: [
                                           Text(
                                             'Qty: ',
-                                            style: TextStyle(fontSize: 14),
+                                            style: kFontSize14DM,
                                           ),
                                           DropdownButton<String>(
                                             iconSize: 16,
                                             elevation: 0,
                                             // isExpanded: true,
-                                            style: TextStyle(
-                                                fontFamily: 'DM Sans',
-                                                color: Colors.black,
-                                                fontSize: 14.0),
+                                            style: kBlackDMSansText,
                                             value: cartController
                                                 .productsInCart[index]
                                                 .kickerQuantity
@@ -171,13 +155,8 @@ class CartScreen extends GetView<CartScreenController> {
                         const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                     child: RawMaterialButton(
                       fillColor: kContrastColor,
-                      child: Text(
-                        'Continue with checkout',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'DM Sans',
-                            fontWeight: FontWeight.bold),
-                      ),
+                      child: Text('Continue with checkout',
+                          style: kWhiteDMSansText),
                       onPressed: () {
                         Get.toNamed(Paths.CHECKOUT);
                       },
