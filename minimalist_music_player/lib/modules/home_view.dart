@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_final_fields, prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_final_fields, prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:minimalist_music_player/constants.dart';
 import 'package:minimalist_music_player/model/audio_metadata.dart';
+import 'package:minimalist_music_player/widgets/music_controls.dart';
+
+import '../main.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -14,71 +17,9 @@ class HomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<HomePage> with WidgetsBindingObserver {
   final _player = AudioPlayer();
-  var audioSource = [
-    AudioSource.uri(
-      Uri.parse("asset:///assets/audios/Shiloh Dynasty Imagination.mp3"),
-      tag: AudioMetadata(
-          album: "LoFi",
-          title: "Imagination",
-          artwork:
-              "https://i.pinimg.com/564x/c6/8d/4a/c68d4a8c44ebdb3ed1b56ed2bb1d7319.jpg",
-          artist: 'Shiloh Dynasty'),
-    ),
-    AudioSource.uri(
-      Uri.parse("asset:///assets/audios/Soft skin.mp3"),
-      tag: AudioMetadata(
-          album: "LoFi",
-          title: "Soft skin LoFi",
-          artwork:
-              "https://i.pinimg.com/736x/04/08/42/04084232214b271596efd65d2e73f430.jpg",
-          artist: 'Timmies'),
-    ),
-    AudioSource.uri(
-      Uri.parse("asset:///assets/audios/Coffee.mp3"),
-      tag: AudioMetadata(
-          album: "LoFi",
-          title: "Coffee",
-          artwork:
-              "https://i.pinimg.com/564x/be/94/58/be9458b33bb8c1f9fbb532ab4ce316ac.jpg",
-          artist: 'Beabadoobee'),
-    ),
-  ];
-
+  double padding = defaultPadding * 2;
   int currentIndex = 0;
-
   late ConcatenatingAudioSource _playlist;
-
-  var counter = 0;
-
-  List<Color> get getColorsList => [
-        const Color(0xFFE7F6FE),
-        const Color(0xFFC1E6FE),
-        const Color(0xFF99D5FE),
-        const Color(0xFF8DD0FF),
-      ]..shuffle();
-
-  List<Alignment> get getAlignments => [
-        Alignment.bottomLeft,
-        Alignment.bottomRight,
-        Alignment.topRight,
-        Alignment.topLeft,
-      ];
-
-  _startBgColorAnimationTimer() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      counter++;
-      setState(() {});
-    });
-
-    const interval = Duration(seconds: 5);
-    Timer.periodic(
-      interval,
-      (Timer timer) {
-        counter++;
-        setState(() {});
-      },
-    );
-  }
 
   @override
   void initState() {
@@ -104,7 +45,7 @@ class _MyHomePageState extends State<HomePage> with WidgetsBindingObserver {
     _playlist = ConcatenatingAudioSource(children: audioSource);
     _player.sequenceStateStream.listen((event) {
       setState(() {
-        // TODO currentIndex = event!.currentIndex;
+        currentIndex = event?.currentIndex ?? 0;
       });
     });
     try {
@@ -126,19 +67,53 @@ class _MyHomePageState extends State<HomePage> with WidgetsBindingObserver {
           buildPlayerContent()
         ],
       ),
+      floatingActionButton: Tooltip(
+        message: 'Change Theme',
+        child: FloatingActionButton(
+          backgroundColor: Colors.greenAccent,
+          child: Container(
+            width: 60,
+            height: 60,
+            child: Icon(Icons.change_circle,
+                // size: 40,
+                color: audioSource[currentIndex].tag!.backgroundColors[0]),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight,
+                colors: audioSource[currentIndex]
+                    .tag!
+                    .backgroundColors, //getColorsList,
+                tileMode: TileMode.clamp,
+              ),
+            ),
+          ),
+          onPressed: () {
+            setState(() {
+              currentIndex = currentIndex != 2 ? currentIndex + 1 : 0;
+            });
+          },
+        ),
+      ),
     );
   }
 
+  late Listenable controller;
   Widget buildGradientBackgroundWidget() {
+    print('backgr ${audioSource[currentIndex].tag!.backgroundColors}');
     return AnimatedContainer(
       duration: Duration(milliseconds: 600),
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          begin: getAlignments[currentIndex % getAlignments.length],
-          end: getAlignments[(currentIndex + 2) % getAlignments.length],
-          colors: getColorsList,
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
+          colors:
+              audioSource[currentIndex].tag!.backgroundColors, //getColorsList,
           tileMode: TileMode.clamp,
         ),
+        // gradient: background
+        //           .evaluate(AlwaysStoppedAnimation(currentIndex/audioSource.length)),
       ),
     );
   }
@@ -179,9 +154,17 @@ class _MyHomePageState extends State<HomePage> with WidgetsBindingObserver {
                 duration: Duration(milliseconds: 300),
                 curve: Curves.easeIn,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-                  // TODO: gradient: background.evaluate
-                ),
+                    borderRadius: BorderRadius.circular(24),
+                    gradient: LinearGradient(
+                      begin: Alignment.topRight,
+                      end: Alignment.bottomLeft,
+                      colors: audioSource[currentIndex]
+                          .tag!
+                          .backgroundColors, //getColorsList,
+                      tileMode: TileMode.clamp,
+                    )
+                    // TODO: gradient: background.evaluate(AlwaysStoppedAnimation(currentIndex!/audioSource.length))
+                    ),
               ),
             ),
           ],
@@ -191,23 +174,38 @@ class _MyHomePageState extends State<HomePage> with WidgetsBindingObserver {
   }
 
   Widget buildArtWork(String artwork) {
-    return Container(
-      height: artWorkDiameter,
-      width: artWorkDiameter,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(artwork),
-        ),
-        shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 40,
-            color: Color(0x142196F3),
-            offset: Offset(0, 40),
+    if (artwork.isEmpty) return SizedBox();
+    return AnimatedSwitcher(
+      duration: Duration(seconds: 1),
+      child: Container(
+        height: artWorkDiameter,
+        width: artWorkDiameter,
+        key: Key(artwork),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(artwork),
           ),
-        ],
+          shape: BoxShape.circle,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 40,
+              color: Color(0x142196F3),
+              offset: Offset(0, 40),
+            ),
+          ],
+        ),
       ),
+      transitionBuilder: (child, animation) {
+        return RotationTransition(
+          turns: animation,
+          alignment: Alignment.center,
+          child: FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
+      },
     );
   }
 
@@ -217,8 +215,10 @@ class _MyHomePageState extends State<HomePage> with WidgetsBindingObserver {
       builder: (context, snapshot) {
         final state = snapshot.data;
         if (state?.sequence.isEmpty ?? true) return SizedBox();
-        final metadata = state!.currentSource!.tag; // as AudioMetaData;
-
+        final metadata = state!.currentSource!.tag as AudioMetadata;
+        print('meta build');
+        print(state.sequence);
+        // print(metadata.artwork);
         return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -235,12 +235,14 @@ class _MyHomePageState extends State<HomePage> with WidgetsBindingObserver {
     double posY = Get.height / 2 - (minCardHeight / 2 + artWorkDiameter / 2);
     return Positioned(
       top: posY,
+      width: cardWidth - (padding * 2),
       child: Column(
         children: [
           buildMetaData(),
           SizedBox(
             height: defaultPadding * 2,
           ),
+          MusicControls(player: _player)
         ],
       ),
     );
@@ -248,10 +250,24 @@ class _MyHomePageState extends State<HomePage> with WidgetsBindingObserver {
 
   Widget buildTitle(title) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: Text(
-        title,
-        style: TextStyle(color: Colors.white), //TODO Appstyle.title
+      padding: const EdgeInsets.only(top: 10),
+      child: AnimatedSwitcher(
+        duration: Duration(milliseconds: 600),
+        switchInCurve: Curves.bounceIn,
+        child: Text(
+          title,
+          style: kSongTitleTextStyle,
+          key: Key(title),
+        ),
+        transitionBuilder: (child, animation) {
+          return ScaleTransition(
+            scale: animation,
+            child: FadeTransition(
+              opacity: animation,
+              child: child,
+            ),
+          );
+        },
       ),
     );
   }
@@ -259,10 +275,17 @@ class _MyHomePageState extends State<HomePage> with WidgetsBindingObserver {
   Widget buildArtist(title) {
     print('artist $title');
     return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: Text(
-        title,
-        style: TextStyle(color: Colors.white), //TODO Appstyle.artist
+      padding: const EdgeInsets.only(top: 10),
+      child: AnimatedSwitcher(
+        duration: Duration(milliseconds: 600),
+        switchInCurve: Curves.bounceIn,
+        child: Text(title, style: kSongArtistTextStyle),
+        transitionBuilder: (child, animation) {
+          return FadeTransition(
+            opacity: animation,
+            child: child,
+          );
+        },
       ),
     );
   }

@@ -15,6 +15,8 @@ dependencies:
   just_audio_windows: ^0.1.0
   just_audio_libwinmedia: ^0.0.4
   rive: ^0.9.0
+  rxdart: ^0.27.4
+  # rive: ^0.7.10
 
 dev_dependencies:
   flutter_test:
@@ -23,3 +25,14 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/
+    - audios/
+
+  fonts:
+    - family: Fascinate-Regular
+      fonts: 
+        - asset: assets/fonts/Fascinate-Regular.ttf
+    - family: AmaticSC-Regular
+      fonts: 
+        - asset: assets/fonts/AmaticSC-Regular.ttf
