@@ -1,21 +1,26 @@
 // ignore_for_file: prefer_const_constructors_in_immutables, use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:minimalist_music_player/constants.dart';
+import 'package:minimalist_music_player/model/position_data.dart';
+import 'package:minimalist_music_player/widgets/music_seekbar.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:rive/rive.dart';
 
 class MusicControls extends StatefulWidget {
   final AudioPlayer player;
-  MusicControls({required this.player});
+  final ValueChanged<double>? onChange;
+  MusicControls({required this.player, required this.onChange});
 
   @override
   State<MusicControls> createState() => _MusicControlsState();
 }
 
-class _MusicControlsState extends State<MusicControls> {
+class _MusicControlsState extends State<MusicControls>
+    with SingleTickerProviderStateMixin {
   late AudioPlayer player;
+  late AnimationController controller;
   RiveAnimationController? prevController;
   RiveAnimationController? nextController;
   Artboard? riveArtBoard;
@@ -26,6 +31,10 @@ class _MusicControlsState extends State<MusicControls> {
     player = widget.player;
     prevController = OneShotAnimation('prev', autoplay: false);
     nextController = OneShotAnimation('next', autoplay: false);
+    controller = AnimationController(
+        vsync: this,
+        duration: const Duration(milliseconds: 300),
+        upperBound: 0.5);
 
     // rootBundle.load('images/vehicles.riv').then((data) {
     //   final file = RiveFile.import(data);
@@ -61,11 +70,17 @@ class _MusicControlsState extends State<MusicControls> {
   void playPauseButton(playing, processingState) {
     if (!playing) {
       playPauseButtonInput?.value = true;
-      Future.delayed(Duration(milliseconds: 100), () {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        if (!controller.isAnimating) controller.forward(from: 0.0);
         player.play();
+        widget.onChange!(maxCardHeight);
       });
     } else if (processingState != ProcessingState.completed) {
       playPauseButtonInput?.value = false;
+      Future.delayed(const Duration(milliseconds: 100), () {
+        if (controller.isCompleted) controller.reverse();
+        widget.onChange!(minCardHeight);
+      });
       player.pause();
     }
   }
@@ -144,36 +159,30 @@ class _MusicControlsState extends State<MusicControls> {
   }
 
   Widget buildPausePlayIcon(playing) {
-    if (playing!= null && !playing) {
-      return Icon(Icons.play_circle, color: Colors.white, size: 70);
+    if (playing != null && !playing) {
+      return const Icon(Icons.play_arrow, color: Colors.white, size: 70);
     }
-    return Icon(Icons.pause_circle, color: Colors.white, size: 70);
-    
+    return const Icon(Icons.pause, color: Colors.white, size: 70);
   }
 
-  // Widget buildSeekBar() {
-  //   return StreamBuilder<PositionData>(
-  //     stream: positionDataStream,
-  //     builder: (context, snapshot) {
-  //       final positionData = snapshot.data;
-  //       return MusicSeekBar(
-  //         duration: positionData?.duration ?? Duration.zero,
-  //         position: positionData?.position ?? Duration.zero,
-  //       );
-  //     },
-  //   );
-  // }
+  Widget buildSeekBar() {
+    return StreamBuilder<PositionData>(
+      stream: positionDataStream,
+      builder: (context, snapshot) {
+        final positionData = snapshot.data;
+        return MusicSeekBar(
+          duration: positionData?.duration ?? Duration.zero,
+          position: positionData?.position ?? Duration.zero,
+          controller: controller,
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        buildControlButtons(),
-      ],
+      children: [buildControlButtons(), buildSeekBar()],
     );
   }
-}
-
-class PositionData {
-  PositionData(Duration position, Duration duration);
 }
