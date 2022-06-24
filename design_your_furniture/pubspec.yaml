@@ -23,3 +23,20 @@ flutter:
 
   assets:
    - assets/
+  
+  fonts:
+      - family: CustomIcons
+        fonts:
+          - asset: assets/fonts/CustomIcons.ttf
+  
+      - family: Montserrat-Bold
+        fonts:
+          - asset: assets/fonts/Montserrat-Bold.ttf
+
+      - family: Montserrat-Black
+        fonts:
+          - asset: assets/fonts/Montserrat-Black.ttf
+
+      - family: Montserrat-Medium
+        fonts:
+          - asset: assets/fonts/Montserrat-Medium.ttf

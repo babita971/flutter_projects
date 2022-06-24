@@ -7,3 +7,4 @@ var images = [
 var title = ["Hemes ArmChair", "Sofar ArmChair", "Wooden ArmChair"];
 
 var price = ["126", "148", "179"];
+//TODO:Make class here, 
