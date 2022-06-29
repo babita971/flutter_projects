@@ -23,6 +23,8 @@ flutter:
 
   assets:
    - assets/
+   - assets/images-nobg/
+   - assets/images/
   
   fonts:
       - family: CustomIcons

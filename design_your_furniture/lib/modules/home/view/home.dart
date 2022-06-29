@@ -1,7 +1,9 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:design_your_furniture/constants.dart';
 import 'package:design_your_furniture/data/furniture_data.dart';
+import 'package:design_your_furniture/modal/furniture_modal.dart';
+import 'package:design_your_furniture/modules/furniture/view/furniture_view.dart';
 import 'package:design_your_furniture/modules/home/controller/home_controller.dart';
 import 'package:design_your_furniture/widgets/custom_icon.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +11,7 @@ import 'package:get/get.dart';
 
 class HomePage extends GetView<HomeController> {
   HomeController homeController = Get.find();
+  List<ChairModel> furnitureData = FurnitureData().furnitureStore;
 
   Widget buildCustomAppBar() {
     return Positioned(
@@ -47,7 +50,6 @@ class HomePage extends GetView<HomeController> {
   }
 
   Widget buildCustomAppTitle(height) {
-    print('kkkk $height');
     return Positioned(
       top: height * 0.2,
       left: 30,
@@ -62,8 +64,8 @@ class HomePage extends GetView<HomeController> {
             ),
           ),
           const Text(
-            "Lorem Ipsum",
-            style: TextStyle(fontSize: 16, fontFamily: "Montserrat-Medium"),
+            "Explore our wide range of lounge chairs.",
+            style: TextStyle(fontSize: 14, fontFamily: "Montserrat-Medium"),
           ),
         ],
       ),
@@ -72,29 +74,35 @@ class HomePage extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Scaffold(
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            var width = constraints.maxWidth;
-            var height = constraints.maxHeight;
-            print('width $width');
-            return Stack(
-              fit: StackFit.expand,
-              children: [
-                buildGradientBackground(width, height),
-                buildCustomAppBar(),
-                buildCustomAppTitle(height),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    height: height * 0.6,
-                    child: ListView.builder(
-                      itemCount: images.length,
-                      scrollDirection: Axis.horizontal,
-                      physics: BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Padding(
+    return
+
+        // Obx(
+        //   () =>
+        Scaffold(
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          var width = constraints.maxWidth;
+          var height = constraints.maxHeight;
+          return Stack(
+            fit: StackFit.expand,
+            children: [
+              buildGradientBackground(width, height),
+              buildCustomAppBar(),
+              buildCustomAppTitle(height),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: SizedBox(
+                  height: height * 0.6,
+                  child: ListView.builder(
+                    itemCount: furnitureData.length,
+                    scrollDirection: Axis.horizontal,
+                    physics: BouncingScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          Get.to(() => FurniturePage(), arguments: index);
+                        },
+                        child: Padding(
                           padding: const EdgeInsets.only(left: 35, bottom: 60),
                           child: SizedBox(
                             width: 200,
@@ -119,11 +127,11 @@ class HomePage extends GetView<HomeController> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Image.asset(
-                                    images[index],
-                                    width: width * 2.5,
-                                    height: height / 4,
-                                  ),
+                                  Image.asset(furnitureData[index].chairPreview,
+                                      // images[0],
+                                      width: width * 3,
+                                      height: height / 4,
+                                      fit: BoxFit.cover),
                                   SizedBox(
                                     height: 12,
                                   ),
@@ -134,7 +142,7 @@ class HomePage extends GetView<HomeController> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          title[index],
+                                          furnitureData[index].chairName,
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontFamily: "Montserrat-Bold",
@@ -157,7 +165,9 @@ class HomePage extends GetView<HomeController> {
                                         SizedBox(
                                             // height: 50.0,
                                             ),
-                                        Text(price[index] + " \$",
+                                        Text(
+                                            "${furnitureData[index]
+                                                    .chairPrice} \$",
                                             style: TextStyle(
                                                 fontSize: 30.0,
                                                 fontFamily: "Montserrat-Bold",
@@ -171,57 +181,58 @@ class HomePage extends GetView<HomeController> {
                               )
                             ]),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
                 ),
-              ],
-            );
-          },
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Color(0xFF7686AC),
-          unselectedItemColor: Color(0xFFA4B1CC),
-          onTap: (index) {
-            homeController.updateCurrentIndex(index);
-          },
-          currentIndex: homeController.currentIndex,
-          items: [
-            BottomNavigationBarItem(
-              label: '',
-              icon: Icon(Icons.panorama_horizontal),
-            ),
-            BottomNavigationBarItem(
-              label: '',
-              icon: Icon(Icons.bookmark_border),
-            )
-          ],
-        ),
-        floatingActionButton: Container(
-          width: 65.0,
-          height: 65.0,
-          decoration: BoxDecoration(
-              color: Color(0xFFfa7b58),
-              shape: BoxShape.circle,
-              boxShadow: [
-                BoxShadow(
-                    color: Color(0xFFf78a6c).withOpacity(.6),
-                    offset: Offset(0.0, 10.0),
-                    blurRadius: 10.0)
-              ]),
-          child: RawMaterialButton(
-            shape: CircleBorder(),
-            child: Icon(
-              Icons.add,
-              size: 35.0,
-              color: Colors.white,
-            ),
-            onPressed: () {},
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+              ),
+            ],
+          );
+        },
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        selectedItemColor: Color(0xFF7686AC),
+        unselectedItemColor: Color(0xFFA4B1CC),
+        onTap: (index) {
+          homeController.updateCurrentIndex(index);
+        },
+        currentIndex: homeController.currentIndex,
+        items: [
+          BottomNavigationBarItem(
+            label: '',
+            icon: Icon(Icons.panorama_horizontal),
+          ),
+          BottomNavigationBarItem(
+            label: '',
+            icon: Icon(Icons.bookmark_border),
+          )
+        ],
+      ),
+      floatingActionButton: Container(
+        width: 65.0,
+        height: 65.0,
+        decoration: BoxDecoration(
+            color: Color(0xFFfa7b58),
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                  color: Color(0xFFf78a6c).withOpacity(.6),
+                  offset: Offset(0.0, 10.0),
+                  blurRadius: 10.0)
+            ]),
+        child: RawMaterialButton(
+          shape: CircleBorder(),
+          child: Icon(
+            Icons.add,
+            size: 35.0,
+            color: Colors.white,
+          ),
+          onPressed: () {},
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // ),
     );
   }
 }
