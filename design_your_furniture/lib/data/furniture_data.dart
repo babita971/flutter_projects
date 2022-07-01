@@ -1,20 +1,7 @@
 import 'package:design_your_furniture/modal/furniture_modal.dart';
 
-// var images = [
-//   'assets/preview_2.png',
-//   'assets/image_01.png',
-//   'assets/image_02.png',
-//   'assets/image_03.png'
-// ];
-
-// var title = ["Hemes ArmChair", "Sofar ArmChair", "Wooden ArmChair"];
-
-// var price = ["126", "148", "179"];
-
-// var productTitle =["Hemes ArmChair", "Sofar ArmChair", "Wooden ArmChair"];
-
 class FurnitureData {
-  List<ChairModel> furnitureStore = [
+  final List<ChairModel> _furnitureStore = [
     ChairModel(
         chairName: 'Rickman Lounge Chair-Yellow',
         chairImages: [
@@ -27,7 +14,9 @@ class FurnitureData {
         chairSubTitle: 'new sell',
         chairPreview:
             'assets/images-nobg/Rickman_Lounge_Chair_Yellow1-removebg.png',
-        chairPrice: 126),
+        chairPrice: 126,
+        description:
+            'All Wooden Structure. Made from Solid Teak Wood with Melamine Polish.'),
     ChairModel(
         chairName: 'Rickman Lounge Chair-Mat Grey',
         chairImages: [
@@ -40,7 +29,9 @@ class FurnitureData {
         chairPreview:
             'assets/images-nobg/Rickman_Lounge_Chair_Color_Matty_Grey_1-removebg.png',
         chairSubTitle: 'new sell',
-        chairPrice: 149),
+        chairPrice: 149,
+        description:
+            '40 Density Premium Quality foum with HD Supersoft foum covered Seat And Back.'),
     ChairModel(
         chairName: 'Owen Lounge Chair-Midnight Blue',
         chairImages: [
@@ -52,7 +43,9 @@ class FurnitureData {
         chairPreview:
             'assets/images-nobg/Owen_Lounge_Chair_Matte_Midnight_Blue_1-removebg.png',
         chairSubTitle: 'new sell',
-        chairPrice: 163),
+        chairPrice: 163,
+        description:
+            'Simply elegant in its design, this grey Prato dining chair is perfect for an intimate meal or family snack time.'),
     ChairModel(
         chairName: 'Rickman Lounge Chair-Green',
         chairImages: [
@@ -65,6 +58,16 @@ class FurnitureData {
         chairPreview:
             'assets/images-nobg/Rickman_Lounge_Chair_Green1-removebg.png',
         chairSubTitle: 'new sell',
-        chairPrice: 182),
+        chairPrice: 182,
+        description:
+            'Comfort and cozy, our Rickman Lounge Chair is the epitome of elegance.'),
   ];
+
+  getAllFurnitureData() {
+    return _furnitureStore;
+  }
+
+  getChairDataByIndex(int index) {
+    return _furnitureStore[index];
+  }
 }

@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:design_your_furniture/app_pages.dart';
 import 'package:design_your_furniture/constants.dart';
 import 'package:design_your_furniture/data/furniture_data.dart';
 import 'package:design_your_furniture/modal/furniture_modal.dart';
-import 'package:design_your_furniture/modules/furniture/view/furniture_view.dart';
 import 'package:design_your_furniture/modules/home/controller/home_controller.dart';
 import 'package:design_your_furniture/widgets/custom_icon.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 class HomePage extends GetView<HomeController> {
   HomeController homeController = Get.find();
-  List<ChairModel> furnitureData = FurnitureData().furnitureStore;
+  List<ChairModel> furnitureStore = FurnitureData().getAllFurnitureData();
 
   Widget buildCustomAppBar() {
     return Positioned(
@@ -94,13 +94,13 @@ class HomePage extends GetView<HomeController> {
                 child: SizedBox(
                   height: height * 0.6,
                   child: ListView.builder(
-                    itemCount: furnitureData.length,
+                    itemCount: furnitureStore.length,
                     scrollDirection: Axis.horizontal,
                     physics: BouncingScrollPhysics(),
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          Get.to(() => FurniturePage(), arguments: index);
+                          Get.toNamed(AppPages.FURNITURE_VIEW, arguments: index);
                         },
                         child: Padding(
                           padding: const EdgeInsets.only(left: 35, bottom: 60),
@@ -127,8 +127,7 @@ class HomePage extends GetView<HomeController> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Image.asset(furnitureData[index].chairPreview,
-                                      // images[0],
+                                  Image.asset(furnitureStore[index].chairPreview,
                                       width: width * 3,
                                       height: height / 4,
                                       fit: BoxFit.cover),
@@ -142,7 +141,7 @@ class HomePage extends GetView<HomeController> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          furnitureData[index].chairName,
+                                          furnitureStore[index].chairName,
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontFamily: "Montserrat-Bold",
@@ -166,7 +165,7 @@ class HomePage extends GetView<HomeController> {
                                             // height: 50.0,
                                             ),
                                         Text(
-                                            "${furnitureData[index]
+                                            "${furnitureStore[index]
                                                     .chairPrice} \$",
                                             style: TextStyle(
                                                 fontSize: 30.0,
